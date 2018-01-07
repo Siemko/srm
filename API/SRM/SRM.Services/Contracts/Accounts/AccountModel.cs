@@ -1,4 +1,4 @@
-﻿namespace Azynmag.Services.Contracts.Accounts
+﻿namespace SRM.Services.Contracts.Accounts
 {
     public class AccountModel
     {

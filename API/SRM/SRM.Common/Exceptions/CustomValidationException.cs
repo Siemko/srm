@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Azynmag.Common.Exceptions
+namespace SRM.Common.Exceptions
 {
     public class CustomValidationException : Exception
     {

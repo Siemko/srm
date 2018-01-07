@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27004.2005
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{25B84CAE-C72D-42B9-960E-F0AC56E69BEF}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AppLayer", "AppLayer", "{AA0C61D6-7713-4D7A-ABA8-B6A57759F675}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SRM", "SRM\SRM.csproj", "{201E4F2A-9B5F-4098-9A04-76270CA786F2}"

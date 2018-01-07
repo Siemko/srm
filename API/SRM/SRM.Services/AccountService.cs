@@ -1,14 +1,14 @@
-﻿using Azynmag.Common.Exceptions;
-using Azynmag.Core;
-using Azynmag.Core.Entities.Identity;
-using Azynmag.Services.Contracts.Accounts;
-using Azynmag.Services.Contracts.Users;
-using Azynmag.Services.Interfaces;
+﻿using SRM.Common.Exceptions;
+using SRM.Core;
+using SRM.Core.Entities.Identity;
+using SRM.Services.Contracts.Accounts;
+using SRM.Services.Contracts.Users;
+using SRM.Services.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 using System.Linq;
 
-namespace Azynmag.Services
+namespace SRM.Services
 {
     public class AccountService : BaseService, IAccountService
     {

@@ -1,4 +1,4 @@
-﻿namespace Azynmag.Core
+﻿namespace SRM.Core
 {
     public class DbInitializer
     {

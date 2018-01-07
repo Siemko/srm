@@ -1,6 +1,6 @@
-﻿using Azynmag.Services.Contracts.Accounts;
+﻿using SRM.Services.Contracts.Accounts;
 
-namespace Azynmag.Services.Interfaces
+namespace SRM.Services.Interfaces
 {
     public interface IAccountService
     {

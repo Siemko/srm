@@ -1,12 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Azynmag.Services.Contracts.Accounts;
-using Azynmag.Services.Interfaces;
-using Azynmag.Models.ViewModels.Authentication;
+using SRM.Services.Contracts.Accounts;
+using SRM.Services.Interfaces;
+using SRM.Models.ViewModels.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using System.Linq;
-using Azynmag.Authorization;
+using SRM.Authorization;
 
-namespace Azynmag.Controllers
+namespace SRM.Controllers
 {
     [AllowAnonymous]
     public class AuthenticationController : BaseController
@@ -43,6 +43,15 @@ namespace Azynmag.Controllers
             if (!signUpResponse.Result.Succeeded)
                 return CustomValidationError("Sign up errors", signUpResponse.Result.Errors.Select(e => e.Description));
 
+            return Ok();
+        }
+
+        [HttpPost, Route("remind-password")]
+        public ActionResult RemindPassword([FromBody]RemindPasswordVM remindPasswordViewModel)
+        {
+            if (!ModelState.IsValid)
+                return RequestModelIsIncorrect();
+            //TODO
             return Ok();
         }
     }

@@ -6,14 +6,10 @@ using System.Threading.Tasks;
 
 namespace SRM.Models.ViewModels.Authentication
 {
-    public class SignUpVM
+    public class RemindPasswordVM
     {
         [Required]
         [EmailAddress]
         public string Email { get; set; }
-
-        [Required]
-        [StringLength(25, MinimumLength = 6)]
-        public string Password { get; set; }
     }
 }

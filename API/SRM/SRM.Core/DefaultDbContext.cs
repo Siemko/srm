@@ -1,10 +1,10 @@
-﻿using Azynmag.Core.Entities;
-using Azynmag.Core.Entities.Identity;
+﻿using SRM.Core.Entities;
+using SRM.Core.Entities.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 
-namespace Azynmag.Core
+namespace SRM.Core
 {
     public class DefaultDbContext : IdentityDbContext<User, Role, int>
     { 

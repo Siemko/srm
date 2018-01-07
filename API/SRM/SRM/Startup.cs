@@ -3,14 +3,14 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
-using Azynmag.Core;
-using Azynmag.Core.Entities.Identity;
-using Azynmag.Services;
-using Azynmag.Services.Interfaces;
+using SRM.Core;
+using SRM.Core.Entities.Identity;
+using SRM.Services;
+using SRM.Services.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Azynmag.Authorization;
+using SRM.Authorization;
 
-namespace Azynmag
+namespace SRM
 {
     public class Startup
     {
@@ -33,6 +33,8 @@ namespace Azynmag
               .AddEntityFrameworkStores<DefaultDbContext>();
 
             services.AddScoped<IAccountService, AccountService>();
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IChatService, ChatService>();
 
             services.AddAuthentication(o =>
             {

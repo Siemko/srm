@@ -1,4 +1,4 @@
-﻿namespace Azynmag.Services.Contracts
+﻿namespace SRM.Services.Contracts
 {
     public class BaseContractResponse
     {

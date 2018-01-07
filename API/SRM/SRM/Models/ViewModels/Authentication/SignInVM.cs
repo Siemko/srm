@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Azynmag.Models.ViewModels.Authentication
+namespace SRM.Models.ViewModels.Authentication
 {
     public class SignInVM
     {

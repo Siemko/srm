@@ -1,6 +1,6 @@
-﻿using Azynmag.Services.Contracts.Users;
+﻿using SRM.Services.Contracts.Users;
 
-namespace Azynmag.Services.Contracts.Accounts
+namespace SRM.Services.Contracts.Accounts
 {
     public class SignInResponse : BaseContractResponse
     {

@@ -1,4 +1,4 @@
-﻿namespace Azynmag.Services.Interfaces
+﻿namespace SRM.Services.Interfaces
 {
     public interface IBaseService
     {

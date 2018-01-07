@@ -1,4 +1,4 @@
-﻿namespace Azynmag.Services.Contracts.Users
+﻿namespace SRM.Services.Contracts.Users
 {
     public class UserModel
     {

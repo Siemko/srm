@@ -1,12 +1,11 @@
-﻿using Azynmag.Services.Contracts.Users;
-using Microsoft.Extensions.Options;
+﻿using SRM.Services.Contracts.Users;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
-namespace Azynmag.Authorization
+namespace SRM.Authorization
 {
     public class AuthorizationHelper
     {

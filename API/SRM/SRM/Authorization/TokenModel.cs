@@ -1,11 +1,6 @@
-﻿using Azynmag.Services.Contracts.Users;
-using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using SRM.Services.Contracts.Users;
 
-namespace Azynmag.Authorization
+namespace SRM.Authorization
 {
     public class TokenModel
     {

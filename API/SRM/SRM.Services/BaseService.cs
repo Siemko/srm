@@ -1,13 +1,13 @@
-﻿using Azynmag.Common.Exceptions;
-using Azynmag.Core;
-using Azynmag.Services.Contracts;
-using Azynmag.Services.Interfaces;
+﻿using SRM.Common.Exceptions;
+using SRM.Core;
+using SRM.Services.Contracts;
+using SRM.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Linq;
 
-namespace Azynmag.Services
+namespace SRM.Services
 {
     public class BaseService : IBaseService
     {

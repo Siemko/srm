@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 
-namespace Azynmag.Controllers
+namespace SRM.Controllers
 {
     [Authorize]
     [Route("api/[controller]")]

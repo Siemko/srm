@@ -7,6 +7,7 @@ using SRM.Services.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 using System.Linq;
+using SRM.Common.Constants;
 
 namespace SRM.Services
 {
@@ -30,7 +31,11 @@ namespace SRM.Services
                 var passwordIsCorrect = _userManager.CheckPasswordAsync(user, password);
                 if (user == null || passwordIsCorrect.Result == false)
                     throw new CustomValidationException("Username or password is incorrect.");
-                response.User = new UserModel { Email = user.Email };
+                response.User = new UserModel
+                {
+                    Email = user.Email,
+                    
+                };
             });
         }
 
@@ -39,10 +44,14 @@ namespace SRM.Services
             _logger.LogInformation("User registration start.");
             return ExecuteAction<SignUpResponse>((response) =>
             {
+                var studentRole = _dbContext.Roles.First(r => r.NormalizedName == UserRole.Student.ToUpper());
+                if (studentRole == null)
+                    throw new ResourceNotFoundException("Can't foun student role.");
                 var user = new User
                 {
                     UserName = account.Email,
                     Email = account.Email,
+                    RoleId = studentRole.Id
                 };
                 var result = _userManager.CreateAsync(user, account.Password);
                 if (!result.Result.Succeeded)

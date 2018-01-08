@@ -6,8 +6,11 @@ using Microsoft.EntityFrameworkCore.Design;
 
 namespace SRM.Core
 {
-    public class DefaultDbContext : IdentityDbContext<User, Role, int>
-    { 
+    public class DefaultDbContext : DbContext
+    {
+        public DbSet<User> Users { get; set; }
+        public DbSet<Role> Roles { get; set; }
+
         public DefaultDbContext(DbContextOptions<DefaultDbContext> dbContextOptions) 
             : base(dbContextOptions)
         {

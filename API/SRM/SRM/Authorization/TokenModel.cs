@@ -14,7 +14,7 @@ namespace SRM.Authorization
             Token = token;
             if(user != null)
             {
-                //UserName = user.Email;
+                UserName = user.Email;
             }
         }
     }

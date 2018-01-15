@@ -76,6 +76,7 @@ namespace SRM.Services
                 if (user == null)
                     throw new ResourceNotFoundException("User not found.");
                 user.PasswordHash = _userManager.PasswordHasher.HashPassword(user, model.Password);
+                _dbContext.SaveChanges();
             });
         }
     }

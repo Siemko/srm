@@ -21,5 +21,14 @@ namespace SRM.Services
         {
             _userManager = userManager;
         }
+
+        public GetUsersResponse GetUsers()
+        {
+            return ExecuteAction<GetUsersResponse>((response) =>
+            {
+                var users = _dbContext.Users.Select(u => new UserModel(u));
+                response.Users = users.ToList();
+            });
+        }
     }
 }

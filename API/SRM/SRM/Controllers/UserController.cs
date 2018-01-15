@@ -20,6 +20,15 @@ namespace SRM.Controllers
             return Ok();
         }
 
+        [HttpGet]
+        public ActionResult Get()
+        {
+            var response = _userService.GetUsers();
+            if (!response.Success)
+                return CustomValidationError(response.ErrorMessage);
+            return Json(response.Users);
+        }
+
         [HttpPut]
         public ActionResult Update([FromBody]UserVM userViewModel)
         {

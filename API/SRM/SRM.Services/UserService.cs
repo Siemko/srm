@@ -7,6 +7,7 @@ using SRM.Services.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 using System.Linq;
+using SRM.Services.Contracts;
 
 namespace SRM.Services
 {
@@ -28,6 +29,30 @@ namespace SRM.Services
             {
                 var users = _dbContext.Users.Select(u => new UserModel(u));
                 response.Users = users.ToList();
+            });
+        }
+
+        public BaseContractResponse Activate(int userId)
+        {
+            return ExecuteAction<BaseContractResponse>((response) =>
+            {
+                var user = _dbContext.Users.FirstOrDefault(u => u.Id == userId);
+                if (user == null)
+                    throw new ResourceNotFoundException("User not found.");
+                user.Active = true;
+                _dbContext.SaveChanges();
+            });
+        }
+
+        public BaseContractResponse Deactivate(int userId)
+        {
+            return ExecuteAction<BaseContractResponse>((response) =>
+            {
+                var user = _dbContext.Users.FirstOrDefault(u => u.Id == userId);
+                if (user == null)
+                    throw new ResourceNotFoundException("User not found.");
+                user.Active = false;
+                _dbContext.SaveChanges();
             });
         }
     }

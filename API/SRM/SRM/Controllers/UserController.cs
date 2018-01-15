@@ -37,5 +37,23 @@ namespace SRM.Controllers
             //TODO
             return Ok();
         }
+
+        [HttpPut, Route("{userId}")]
+        public ActionResult Activate(int userId)
+        {
+            var response = _userService.Activate(userId);
+            if (!response.Success)
+                return CustomValidationError(response.ErrorMessage);
+            return Json(response);
+        }
+
+        [HttpPut, Route("{userId}")]
+        public ActionResult Disable(int userId)
+        {
+            var response = _userService.Deactivate(userId);
+            if (!response.Success)
+                return CustomValidationError(response.ErrorMessage);
+            return Json(response);
+        }
     }
 }

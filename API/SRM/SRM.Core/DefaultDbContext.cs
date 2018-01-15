@@ -10,6 +10,7 @@ namespace SRM.Core
     {
         public DbSet<User> Users { get; set; }
         public DbSet<Role> Roles { get; set; }
+        public DbSet<StudentGroup> StudentGroups { get; set; }
 
         public DefaultDbContext(DbContextOptions<DefaultDbContext> dbContextOptions) 
             : base(dbContextOptions)

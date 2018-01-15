@@ -14,5 +14,9 @@ namespace SRM.Core.Entities.Identity
         [Required, ForeignKey("Role")]
         public int RoleId { get; set; }
         public Role Role { get; set; }
+
+        [Required, ForeignKey("StudentGroup")]
+        public int StudentGroupId { get; set; }
+        public StudentGroup StudentGroup { get; set; }
     }
 }

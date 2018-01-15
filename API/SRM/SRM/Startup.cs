@@ -39,7 +39,8 @@ namespace SRM
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IChatService, ChatService>();
             services.AddScoped<IEmailService, EmailService>();
-
+            services.AddScoped<IStudentGroupService, StudentGroupService>();
+            
             services.AddAuthentication(o =>
             {
                 o.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;

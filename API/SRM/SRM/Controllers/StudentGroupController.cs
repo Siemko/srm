@@ -1,12 +1,19 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SRM.Models.ViewModels.StudentsList;
 using SRM.Models.ViewModels.User;
+using SRM.Services.Contracts.StudentGroups;
 using SRM.Services.Interfaces;
 
 namespace SRM.Controllers
 {
     public class StudentGroupController : BaseController
     {
+        private readonly IStudentGroupService _studentGroupService;
+
+        public StudentGroupController(IStudentGroupService studentGroupService)
+        {
+            _studentGroupService = studentGroupService;
+        }
         public StudentGroupController()
         {
         }
@@ -16,8 +23,14 @@ namespace SRM.Controllers
         {
             if (!ModelState.IsValid)
                 return RequestModelIsIncorrect();
-            //TODO
-            return Ok();
+            var model = new StudentGroupModel
+            {
+                Name = studentGroupViewModel.Name
+            };
+            var response = _studentGroupService.Add(model);
+            if (!response.Success)
+                return CustomValidationError(response.ErrorMessage);
+            return Json(response);
         }
 
         [HttpPut]

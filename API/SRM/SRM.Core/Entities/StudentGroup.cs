@@ -1,9 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace SRM.Models.ViewModels.StudentsList
+namespace SRM.Core.Entities
 {
-    public class StudentGroupVM
+    public class StudentGroup
     {
+        [Key]
+        public int Id { get; set; }
+
         [StringLength(100)]
         public string Name { get; set; }
     }

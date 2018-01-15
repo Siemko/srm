@@ -1,4 +1,5 @@
-﻿using SRM.Services.Contracts.Accounts;
+﻿using SRM.Services.Contracts;
+using SRM.Services.Contracts.Accounts;
 
 namespace SRM.Services.Interfaces
 {
@@ -6,5 +7,6 @@ namespace SRM.Services.Interfaces
     {
         SignUpResponse SignUp(AccountModel account);
         SignInResponse SignIn(string username, string password);
+        BaseContractResponse ResetPassword(ResetPasswordModel model);
     }
 }

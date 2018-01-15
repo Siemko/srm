@@ -9,6 +9,7 @@ using SRM.Services;
 using SRM.Services.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using SRM.Authorization;
+using SRM.Common.Configurations;
 
 namespace SRM
 {
@@ -32,9 +33,12 @@ namespace SRM
             services.AddIdentity<User, Role>()
               .AddEntityFrameworkStores<DefaultDbContext>();
 
+            services.Configure<EmailConfiguration>(Configuration.GetSection("EmailConfiguration"));
+
             services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IChatService, ChatService>();
+            services.AddScoped<IEmailService, EmailService>();
 
             services.AddAuthentication(o =>
             {

@@ -12,10 +12,12 @@ namespace SRM.Controllers
     public class AuthenticationController : BaseController
     {
         private readonly IAccountService _accountService;
+        private readonly IEmailService _emailService;
 
-        public AuthenticationController(IAccountService accountService)
+        public AuthenticationController(IAccountService accountService, IEmailService emailService)
         {
             _accountService = accountService;
+            _emailService = emailService;
         }
 
         [HttpPost, Route("sign-in")]
@@ -47,12 +49,28 @@ namespace SRM.Controllers
         }
 
         [HttpPost, Route("remind-password")]
-        public ActionResult RemindPassword([FromBody]RemindPasswordVM remindPasswordViewModel)
+        public ActionResult RemindPassword(string email)
+        {
+            var response = _emailService.SendResetToken(email);
+            if (!response.Success)
+                return CustomValidationError(response.ErrorMessage);
+            return Json(response);
+        }
+
+        [HttpPost, Route("reset-password")]
+        public ActionResult RemindPassword([FromBody]ResetPasswordVM model)
         {
             if (!ModelState.IsValid)
                 return RequestModelIsIncorrect();
-            //TODO
-            return Ok();
+            var resetPasswordModel = new ResetPasswordModel
+            {
+                Password = model.Password,
+                Guid = model.Guid
+            };
+            var response = _accountService.ResetPassword(resetPasswordModel);
+            if (!response.Success)
+                return CustomValidationError(response.ErrorMessage);
+            return Json(response);
         }
     }
 }

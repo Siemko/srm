@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 using System.Linq;
 using SRM.Common.Constants;
+using System;
+using SRM.Services.Contracts;
 
 namespace SRM.Services
 {
@@ -60,6 +62,20 @@ namespace SRM.Services
                 }
                 response.UserId = user.Id;
                 response.Result = result.Result;
+            });
+        }
+
+        public BaseContractResponse ResetPassword(ResetPasswordModel model)
+        {
+            _logger.LogInformation("User reset password start.");
+            return ExecuteAction<BaseContractResponse>((response) =>
+            {
+                if(model.Guid == null)
+                    throw new CustomValidationException("Reset password guid is incorrect.");
+                var user = _dbContext.Users.FirstOrDefault(u => u.ResetPasswordGuid == model.Guid);
+                if (user == null)
+                    throw new ResourceNotFoundException("User not found.");
+                user.PasswordHash = _userManager.PasswordHasher.HashPassword(user, model.Password);
             });
         }
     }

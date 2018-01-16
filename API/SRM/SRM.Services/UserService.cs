@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 using System.Linq;
 using SRM.Services.Contracts;
+using Microsoft.AspNetCore.Http;
 
 namespace SRM.Services
 {
@@ -17,8 +18,9 @@ namespace SRM.Services
 
         public UserService(DefaultDbContext dbContext, 
             ILogger<UserService> logger, 
-            UserManager<User> userManager) 
-            : base(dbContext, logger)
+            UserManager<User> userManager,
+            IHttpContextAccessor httpContextAccessor)
+            : base(dbContext, logger, httpContextAccessor)
         {
             _userManager = userManager;
         }
@@ -27,8 +29,7 @@ namespace SRM.Services
         {
             return ExecuteAction<GetUsersResponse>((response) =>
             {
-                var users = _dbContext.Users.Select(u => new UserModel(u));
-                response.Users = users.ToList();
+                response.Users = _dbContext.Users.Select(u => new UserModel(u)).ToList();
             });
         }
 

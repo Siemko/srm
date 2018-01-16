@@ -12,14 +12,16 @@ using System;
 using SRM.Services.Contracts;
 using SRM.Services.Contracts.StudentGroups;
 using SRM.Core.Entities;
+using Microsoft.AspNetCore.Http;
 
 namespace SRM.Services
 {
     public class StudentGroupService : BaseService, IStudentGroupService
     {
         public StudentGroupService(DefaultDbContext dbContext, 
-            ILogger<AccountService> logger) 
-            : base(dbContext, logger)
+            ILogger<AccountService> logger,
+            IHttpContextAccessor httpContextAccessor)
+            : base(dbContext, logger, httpContextAccessor)
         { }
 
         public BaseContractResponse Add(StudentGroupModel model)

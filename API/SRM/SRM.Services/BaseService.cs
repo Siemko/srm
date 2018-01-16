@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Linq;
+using System.Security.Claims;
+using SRM.Core.Entities.Identity;
 
 namespace SRM.Services
 {
@@ -13,17 +15,21 @@ namespace SRM.Services
     {
         protected readonly DefaultDbContext _dbContext;
         protected readonly ILogger _logger;
+        private HttpContext _httpContext;
 
-        public BaseService(DefaultDbContext dbContext, ILogger logger)
+        public BaseService(DefaultDbContext dbContext, 
+            ILogger logger,
+            IHttpContextAccessor httpContextAccessor)
         {
             _dbContext = dbContext;
             _logger = logger;
         }
 
-        protected int GetCurrentUserId()
+        protected User GetCurrentUser()
         {
-            var user = _dbContext.Users.First();
-            return user.Id;
+            var userEmail = _httpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            var currentUser = _dbContext.Users.FirstOrDefault(u => u.Email == userEmail);
+            return currentUser;
         }
 
         protected TResponse ExecuteAction<TResponse>(Action<TResponse> action) 

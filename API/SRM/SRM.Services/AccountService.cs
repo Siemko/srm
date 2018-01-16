@@ -10,6 +10,7 @@ using System.Linq;
 using SRM.Common.Constants;
 using System;
 using SRM.Services.Contracts;
+using Microsoft.AspNetCore.Http;
 
 namespace SRM.Services
 {
@@ -19,8 +20,9 @@ namespace SRM.Services
 
         public AccountService(DefaultDbContext dbContext, 
             ILogger<AccountService> logger, 
-            UserManager<User> userManager) 
-            : base(dbContext, logger)
+            UserManager<User> userManager,
+            IHttpContextAccessor httpContextAccessor) 
+            : base(dbContext, logger, httpContextAccessor)
         {
             _userManager = userManager;
         }

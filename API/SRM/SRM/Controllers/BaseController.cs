@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using SRM.Services.Contracts;
+using System;
 using System.Net;
 
 namespace SRM.Controllers
@@ -9,6 +11,15 @@ namespace SRM.Controllers
     [Produces("application/json")]
     public class BaseController : Controller
     {
+        protected IActionResult GetResult<T>(Func<T> action, Func<T, object> result)
+             where T : BaseContractResponse
+        {
+            var response = action();
+            if (!response.Success)
+                return CustomValidationError(response.ErrorMessage);
+            return Json(result(response));
+        }
+
         #region Custom Object Results
         protected ObjectResult RequestModelIsIncorrect()
         {

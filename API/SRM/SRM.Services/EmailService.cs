@@ -9,6 +9,7 @@ using Microsoft.Extensions.Options;
 using System.Net.Mail;
 using SRM.Common.Configurations;
 using System.Net;
+using Microsoft.AspNetCore.Http;
 
 namespace SRM.Services
 {
@@ -18,8 +19,9 @@ namespace SRM.Services
 
         public EmailService(DefaultDbContext dbContext, 
             ILogger<EmailService> logger,
-            IOptions<EmailConfiguration> emailConfig) 
-            : base(dbContext, logger)
+            IOptions<EmailConfiguration> emailConfig,
+            IHttpContextAccessor httpContextAccessor)
+            : base(dbContext, logger, httpContextAccessor)
         {
             _emailSettings = emailConfig.Value;
         }

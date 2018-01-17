@@ -11,5 +11,7 @@ namespace SRM.Services.Interfaces
         CreateChatResponse CreateChat(ChatModel model);
         BaseContractResponse AssignToChat(int chatId);
         BaseContractResponse LeftChat(int chatId);
+        BaseContractResponse AddMessage(MessageModel model);
+        BaseContractResponse RemoveMessage(int messageId);
     }
 }

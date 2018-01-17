@@ -13,6 +13,8 @@ namespace SRM.Core
         public DbSet<StudentGroup> StudentGroups { get; set; }
         public DbSet<Event> Events { get; set; }
         public DbSet<EventCategory> EventCategories { get; set; }
+        public DbSet<Chat> Chats { get; set; }
+        public DbSet<Message> Messages { get; set; }
 
         public DefaultDbContext(DbContextOptions<DefaultDbContext> dbContextOptions) 
             : base(dbContextOptions)

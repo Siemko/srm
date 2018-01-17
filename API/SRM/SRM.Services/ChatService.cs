@@ -13,6 +13,7 @@ using SRM.Services.Contracts.Chats;
 using SRM.Services.Contracts.Chats.Models;
 using SRM.Core.Entities;
 using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
 
 namespace SRM.Services
 {
@@ -98,20 +99,45 @@ namespace SRM.Services
                 var user = GetCurrentUser();
                 if (user == null)
                     throw new ResourceNotFoundException("User not found.");
-                response.Chats = _dbContext.Chats
-                                    .Where(c => c.Users.Any(u => u.Id == user.Id))
-                                    .Select(c => new ChatModel(c)).ToList();
+                var chat = _dbContext.Chats
+                                .Include(c => c.Messages)
+                                .FirstOrDefault(c => c.Id == chatId);
+                if (chat == null)
+                    throw new ResourceNotFoundException("Chat not found.");
+                response.Chat = new ChatModel(chat, chat.Messages);
             });
         }
 
         public BaseContractResponse LeftChat(int chatId)
         {
-            throw new System.NotImplementedException();
+            return ExecuteAction<BaseContractResponse>(response =>
+            {
+                var user = GetCurrentUser();
+                if (user == null)
+                    throw new ResourceNotFoundException("User not found.");
+                var chat = _dbContext.Chats
+                                    .Include(c => c.Users)
+                                    .FirstOrDefault(c => c.Id == chatId);
+                if (chat == null)
+                    throw new ResourceNotFoundException("Chat not found.");
+                chat.Users.Remove(user);
+                _dbContext.SaveChanges();
+            });
         }
 
         public BaseContractResponse RemoveMessage(int messageId)
         {
-            throw new System.NotImplementedException();
+            return ExecuteAction<BaseContractResponse>(response =>
+            {
+                var user = GetCurrentUser();
+                if (user == null)
+                    throw new ResourceNotFoundException("User not found.");
+                var message = _dbContext.Messages.FirstOrDefault(m => m.Id == messageId && m.UserId == user.Id);
+                if (message == null)
+                    throw new ResourceNotFoundException("Message not found.");
+                _dbContext.Messages.Remove(message);
+                _dbContext.SaveChanges();
+            });
         }
     }
 }

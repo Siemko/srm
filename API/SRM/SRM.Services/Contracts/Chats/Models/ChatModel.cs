@@ -14,6 +14,9 @@ namespace SRM.Services.Contracts.Chats.Models
         public ICollection<MessageModel> Messages { get; set; }
         public ICollection<UserModel> Users { get; set; }
 
+        public ChatModel()
+        { }
+
         public ChatModel(Chat chat)
         {
             Id = chat.Id;
@@ -24,15 +27,18 @@ namespace SRM.Services.Contracts.Chats.Models
         {
             Id = chat.Id;
             Name = chat.Name;
-            messages = messages.Select(m => { return new MessageModel()
+            Messages = messages.Select(m => 
             {
-                ChatId = m.ChatId,
-                Content = m.Content,
-                Author = new UserModel
+                return new MessageModel()
                 {
-                    Id = m.User.Id
-                }
-            }}).ToList();
+                    ChatId = m.ChatId,
+                    Content = m.Content,
+                    Author = new UserModel
+                    {
+                        Id = m.User.Id
+                    }
+                };
+            }).ToList();
         }
     }
 }

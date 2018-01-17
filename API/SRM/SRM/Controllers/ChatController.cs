@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SRM.Models.ViewModels.Chat;
 using SRM.Models.ViewModels.User;
+using SRM.Services.Contracts.Chats.Models;
 using SRM.Services.Interfaces;
 
 namespace SRM.Controllers
@@ -15,26 +16,23 @@ namespace SRM.Controllers
         }
 
         [HttpGet]
-        public ActionResult Get()
+        public IActionResult Get()
         {
-            //TODO
-            return Ok();
+            return GetResult(() => _chatService.Get(), r => r.Chats);
         }
 
-        [HttpGet, Route("channel")]
-        public ActionResult GetChannel(int chanelId)
+        [HttpGet, Route("{chatId}")]
+        public IActionResult Get(int chatId)
         {
-            //TODO
-            return Ok();
+            return GetResult(() => _chatService.Get(chatId), r => r.Chat);
         }
 
         [HttpPost, Route("channel")]
-        public ActionResult CreateChannel([FromBody]ChatVM chatViewModel)
+        public IActionResult Create([FromBody]ChatVM chatViewModel)
         {
             if (!ModelState.IsValid)
                 return RequestModelIsIncorrect();
-            //TODO
-            return Ok();
+            return GetResult(() => _chatService.CreateChat(chatViewModel.MapToChatModel()), r => r.Chat);
         }
 
         [HttpPut, Route("channel/disable")]

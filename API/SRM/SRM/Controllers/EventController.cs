@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using SRM.Common.Constants;
 using SRM.Models.ViewModels.Chat;
 using SRM.Models.ViewModels.Event;
 using SRM.Services.Contracts.Accounts;
@@ -21,7 +23,7 @@ namespace SRM.Controllers
             return GetResult(() => _eventService.GetEvents(), r => r.Events);
         }
 
-        [HttpPost]
+        [HttpPost, Authorize(Roles = UserRole.Starosta)]
         public IActionResult Create([FromBody]EventVM eventViewModel)
         {
             var model = new EventModel
@@ -34,19 +36,19 @@ namespace SRM.Controllers
             return GetResult(() => _eventService.AddEvent(model), r => r);
         }
 
-        [HttpPut, Route("{eventId}/activate")]
+        [HttpPut, Route("{eventId}/activate"), Authorize(Roles = UserRole.Starosta)]
         public IActionResult ActivateEvent(int eventId)
         {
             return GetResult(() => _eventService.ActivateEvent(eventId), r => r);
         }
 
-        [HttpPut, Route("{eventId}/disable")]
+        [HttpPut, Route("{eventId}/disable"), Authorize(Roles = UserRole.Starosta)]
         public IActionResult DisableEvent(int eventId)
         {
             return GetResult(() => _eventService.DisableEvent(eventId), r => r);
         }
 
-        [HttpGet, Route("activated")]
+        [HttpGet, Route("activated"), Authorize(Roles = UserRole.Starosta)]
         public IActionResult GetActivatedEvents()
         {
             return GetResult(() => _eventService.GetActivatedEvents(), r => r.Events);
@@ -58,7 +60,7 @@ namespace SRM.Controllers
             return GetResult(() => _eventService.AssignToEvent(eventId), r => r);
         }
 
-        [HttpGet, Route("{eventId}/remove-user/{userId}")]
+        [HttpGet, Route("{eventId}/remove-user/{userId}"), Authorize(Roles = UserRole.Starosta)]
         public IActionResult RemoveUserFromEvent(int eventId, int userId)
         {
             return GetResult(() => _eventService.RemoveUserFromEvent(eventId, userId), r => r);

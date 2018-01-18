@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using SRM.Common.Constants;
 using SRM.Models.ViewModels.StudentsList;
 using SRM.Models.ViewModels.User;
 using SRM.Services.Contracts.StudentGroups;
@@ -18,7 +20,7 @@ namespace SRM.Controllers
         {
         }
 
-        [HttpPost]
+        [HttpPost, Authorize(Roles = UserRole.Starosta)]
         public ActionResult Create([FromBody]StudentGroupVM studentGroupViewModel)
         {
             if (!ModelState.IsValid)
@@ -33,7 +35,7 @@ namespace SRM.Controllers
             return Json(response);
         }
 
-        [HttpPut]
+        [HttpPut, Authorize(Roles = UserRole.Starosta)]
         public ActionResult Update([FromBody]StudentGroupVM studentGroupViewModel)
         {
             if (!ModelState.IsValid)
@@ -42,7 +44,7 @@ namespace SRM.Controllers
             return Ok();
         }
 
-        [HttpDelete, Route("{studentGroupId}")]
+        [HttpDelete, Route("{studentGroupId}"), Authorize(Roles = UserRole.Starosta)]
         public ActionResult Delete(int studentGroupId)
         {
             //TODO

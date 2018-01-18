@@ -10,7 +10,13 @@ namespace SRM.Core.Entities.Identity
     public class User : IdentityUser<int>
     {
         public Guid? ResetPasswordGuid { get; set; }
+
         public bool Active { get; set; }
+
+        public string Description { get; set; }
+
+        [StringLength(10)]
+        public string StudentNumber { get; set; }
 
         [Required, ForeignKey("Role")]
         public int RoleId { get; set; }

@@ -56,5 +56,30 @@ namespace SRM.Services
                 _dbContext.SaveChanges();
             });
         }
+
+        public GetUserResponse GetUser(int userId)
+        {
+            return ExecuteAction<GetUserResponse>(response =>
+            {
+                var user = _dbContext.Users.FirstOrDefault(u => u.Id == userId);
+                if (user == null)
+                    throw new ResourceNotFoundException("User not found.");
+                response.User = new UserModel(user);
+            });
+        }
+
+        public BaseContractResponse UpdateUser(UserModel model)
+        {
+            return ExecuteAction<BaseContractResponse>(response =>
+            {
+                var user = _dbContext.Users.FirstOrDefault(u => u.Id == model.Id);
+                if (user == null)
+                    throw new ResourceNotFoundException("User not found.");
+                user.Description = model.Description;
+                user.StudentGroupId = model.StudentGroupId;
+                user.StudentNumber = model.StudentNumber;
+                _dbContext.SaveChanges();
+            });
+        }
     }
 }

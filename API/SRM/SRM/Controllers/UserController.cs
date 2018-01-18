@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using SRM.Common.Constants;
 using SRM.Models.ViewModels.User;
 using SRM.Services.Interfaces;
 
@@ -14,13 +16,12 @@ namespace SRM.Controllers
         }
 
         [HttpGet]
-        public ActionResult Get(int userId)
+        public IActionResult Get(int userId)
         {
-            //TODO
-            return Ok();
+            return GetResult(() => _userService.GetUser(userId), r => r.User);
         }
 
-        [HttpGet]
+        [HttpGet, Authorize(Roles = UserRole.Starosta)]
         public ActionResult Get()
         {
             var response = _userService.GetUsers();
@@ -30,15 +31,14 @@ namespace SRM.Controllers
         }
 
         [HttpPut]
-        public ActionResult Update([FromBody]UserVM userViewModel)
+        public IActionResult Update([FromBody]UserVM userViewModel)
         {
             if (!ModelState.IsValid)
                 return RequestModelIsIncorrect();
-            //TODO
-            return Ok();
+            return GetResult(() => _userService.UpdateUser(userViewModel.MapToUserModel()), r => r);
         }
 
-        [HttpPut, Route("{userId}")]
+        [HttpPut, Route("{userId}"), Authorize(Roles = UserRole.Starosta)]
         public ActionResult Activate(int userId)
         {
             var response = _userService.Activate(userId);
@@ -47,7 +47,7 @@ namespace SRM.Controllers
             return Json(response);
         }
 
-        [HttpPut, Route("{userId}")]
+        [HttpPut, Route("{userId}"), Authorize(Roles = UserRole.Starosta)]
         public ActionResult Disable(int userId)
         {
             var response = _userService.Deactivate(userId);

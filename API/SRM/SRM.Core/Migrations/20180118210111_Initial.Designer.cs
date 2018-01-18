@@ -11,8 +11,8 @@ using System;
 namespace SRM.Core.Migrations
 {
     [DbContext(typeof(DefaultDbContext))]
-    [Migration("20180118205839_NewEntities")]
-    partial class NewEntities
+    [Migration("20180118210111_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

@@ -1,4 +1,5 @@
 ﻿using SRM.Common.Constants;
+using SRM.Core.Entities;
 using SRM.Core.Entities.Identity;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,6 +32,14 @@ namespace SRM.Core
                     RoleId = 1
                 };
                 context.Users.Add(admin);
+            }
+            if (!context.Chats.Any())
+            {
+                var mainChat = new Chat
+                {
+                    Name = "STARchat"
+                };
+                context.Chats.Add(mainChat);
             }
             context.SaveChanges();
         }

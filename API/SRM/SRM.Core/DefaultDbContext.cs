@@ -33,14 +33,14 @@ namespace SRM.Core
         }
     }
 
-    public class DataContextFactory : IDesignTimeDbContextFactory<DbContext>
+    public class DataContextFactory : IDesignTimeDbContextFactory<DefaultDbContext>
     {
-        public DbContext CreateDbContext(string[] args)
+        public DefaultDbContext CreateDbContext(string[] args)
         {
-            var optionsBuilder = new DbContextOptionsBuilder<DbContext>()
+            var optionsBuilder = new DbContextOptionsBuilder<DefaultDbContext>()
                 .UseSqlServer("Data Source=DESKTOP-N6PC0RN\\SQLEXPRESS;MultipleActiveResultSets=True;Initial Catalog=srm;Integrated Security=True");
 
-            return new DbContext(optionsBuilder.Options);
+            return new DefaultDbContext(optionsBuilder.Options);
         }
     }
 }

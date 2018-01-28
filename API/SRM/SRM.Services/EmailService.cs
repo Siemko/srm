@@ -30,6 +30,8 @@ namespace SRM.Services
         {
             return ExecuteAction<BaseContractResponse>((response) =>
             {
+                if (string.IsNullOrEmpty(email))
+                    throw new CustomValidationException("Email address is required.");
                 var user = _dbContext.Users.FirstOrDefault(u => u.Email.ToLower() == email.ToLower());
                 if (user == null)
                     throw new ResourceNotFoundException("User not found");

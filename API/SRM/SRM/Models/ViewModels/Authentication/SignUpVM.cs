@@ -15,5 +15,11 @@ namespace SRM.Models.ViewModels.Authentication
         [Required]
         [StringLength(25, MinimumLength = 6)]
         public string Password { get; set; }
+
+        [Required]
+        public string Name { get; set; }
+
+        [Required]
+        public string Surname { get; set; }
     }
 }

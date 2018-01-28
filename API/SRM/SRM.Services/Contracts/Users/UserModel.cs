@@ -8,7 +8,7 @@ namespace SRM.Services.Contracts.Users
         public string Email { get; set; }
         public string RoleName { get; set; }
         public string Description { get; set; }
-        public int StudentGroupId { get; set; }
+        public int? StudentGroupId { get; set; }
         public string StudentNumber { get; set; }
 
         public UserModel() { }

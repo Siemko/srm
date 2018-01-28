@@ -12,14 +12,16 @@ namespace SRM.Core
         {
             //context.Migrate();
 
-            if (!context.Roles.Any())
-            {
-                var roles = new List<Role>
+            var roles = new List<Role>
                 {
                     new Role {  Name = UserRole.Starosta, NormalizedName = UserRole.Starosta.ToUpper() },
                     new Role {  Name = UserRole.Student, NormalizedName = UserRole.Student.ToUpper() }
                 };
+
+            if (!context.Roles.Any())
+            {
                 context.Roles.AddRange(roles);
+                context.SaveChanges();
             }
             if (!context.Users.Any())
             {
@@ -29,9 +31,10 @@ namespace SRM.Core
                 {
                     Email = "admin@admin.com",
                     PasswordHash = passwordHash,
-                    RoleId = 1
+                    RoleId = roles[0].Id
                 };
                 context.Users.Add(admin);
+                context.SaveChanges();
             }
             if (!context.Chats.Any())
             {
@@ -40,8 +43,8 @@ namespace SRM.Core
                     Name = "STARchat"
                 };
                 context.Chats.Add(mainChat);
+                context.SaveChanges();
             }
-            context.SaveChanges();
         }
     }
 }

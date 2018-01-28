@@ -39,17 +39,18 @@ namespace SRM.Controllers
             var account = new AccountModel
             {
                 Email = registerViewModel.Email,
-                Password = registerViewModel.Password
+                Password = registerViewModel.Password,
+                Name = registerViewModel.Name,
+                Surname = registerViewModel.Surname
             };
             var signUpResponse = _accountService.SignUp(account);
             if (!signUpResponse.Result.Succeeded)
                 return CustomValidationError("Sign up errors", signUpResponse.Result.Errors.Select(e => e.Description));
-
-            return Ok();
+            return NoContent();
         }
 
         [HttpPost, Route("remind-password")]
-        public ActionResult RemindPassword(string email)
+        public ActionResult RemindPassword([FromBody]string email)
         {
             var response = _emailService.SendResetToken(email);
             if (!response.Success)

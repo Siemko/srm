@@ -8,6 +8,8 @@ namespace SRM.Authorization
 
         //Additional data
         public string UserName { get; set; }
+        public string RoleName { get; set; }
+        public int Id{ get; set; }
 
         public TokenModel(string token, UserModel user = null)
         {
@@ -15,6 +17,8 @@ namespace SRM.Authorization
             if(user != null)
             {
                 UserName = user.Email;
+                RoleName = user.RoleName;
+                Id = user.Id;
             }
         }
     }

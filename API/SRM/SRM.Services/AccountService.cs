@@ -11,6 +11,7 @@ using SRM.Common.Constants;
 using System;
 using SRM.Services.Contracts;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 
 namespace SRM.Services
 {
@@ -31,14 +32,19 @@ namespace SRM.Services
         {
             return ExecuteAction<SignInResponse>((response) =>
             {
-                var user = _dbContext.Users.FirstOrDefault(u => u.UserName == userName || u.Email == userName);
+                var user = _dbContext.Users
+                                     .Include(u => u.Role)
+                                     .FirstOrDefault(u => u.UserName == userName || u.Email == userName);
                 var passwordIsCorrect = _userManager.CheckPasswordAsync(user, password);
                 if (user == null || passwordIsCorrect.Result == false)
                     throw new CustomValidationException("Username or password is incorrect.");
+                if (!user.EmailConfirmed)
+                    throw new CustomValidationException("User email is not confirmed.");
                 response.User = new UserModel
                 {
                     Email = user.Email,
-                    
+                    Id = user.Id,
+                    RoleName = user.Role.Name
                 };
             });
         }
@@ -50,12 +56,15 @@ namespace SRM.Services
             {
                 var studentRole = _dbContext.Roles.First(r => r.NormalizedName == UserRole.Student.ToUpper());
                 if (studentRole == null)
-                    throw new ResourceNotFoundException("Can't foun student role.");
+                    throw new ResourceNotFoundException("Can't found student role.");
                 var user = new User
                 {
                     UserName = account.Email,
                     Email = account.Email,
-                    RoleId = studentRole.Id
+                    RoleId = studentRole.Id,
+                    Surname = account.Surname,
+                    Name = account.Name,
+                    EmailConfirmed = true
                 };
                 var result = _userManager.CreateAsync(user, account.Password);
                 if (!result.Result.Succeeded)
@@ -78,6 +87,7 @@ namespace SRM.Services
                 if (user == null)
                     throw new ResourceNotFoundException("User not found.");
                 user.PasswordHash = _userManager.PasswordHasher.HashPassword(user, model.Password);
+                user.ResetPasswordGuid = null;
                 _dbContext.SaveChanges();
             });
         }

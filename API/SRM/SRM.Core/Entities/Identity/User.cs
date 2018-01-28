@@ -18,12 +18,18 @@ namespace SRM.Core.Entities.Identity
         [StringLength(10)]
         public string StudentNumber { get; set; }
 
+        [StringLength(20)]
+        public string Name { get; set; }
+
+        [StringLength(30)]
+        public string Surname { get; set; }
+
         [Required, ForeignKey("Role")]
         public int RoleId { get; set; }
         public Role Role { get; set; }
 
-        [Required, ForeignKey("StudentGroup")]
-        public int StudentGroupId { get; set; }
+        [ForeignKey("StudentGroup")]
+        public int? StudentGroupId { get; set; }
         public StudentGroup StudentGroup { get; set; }
     }
 }

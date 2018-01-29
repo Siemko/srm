@@ -6,7 +6,7 @@ using System.Net;
 
 namespace SRM.Controllers
 {
-    [Authorize]
+    [Authorize(AuthenticationSchemes = "Bearer")]
     [Route("api/[controller]")]
     [Produces("application/json")]
     public class BaseController : Controller

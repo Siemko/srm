@@ -9,6 +9,7 @@ using Microsoft.Extensions.Logging;
 using System.Linq;
 using SRM.Services.Contracts;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 
 namespace SRM.Services
 {
@@ -29,7 +30,10 @@ namespace SRM.Services
         {
             return ExecuteAction<GetUsersResponse>((response) =>
             {
-                response.Users = _dbContext.Users.Select(u => new UserModel(u)).ToList();
+                response.Users = _dbContext.Users
+                                           .Include(u => u.Role)
+                                           .Include(u => u.StudentGroup)
+                                           .Select(u => new UserModel(u)).ToList();
             });
         }
 

@@ -15,14 +15,14 @@ namespace SRM.Controllers
             _userService = userService;
         }
 
-        [HttpGet]
+        [HttpGet("{userId}")]
         public IActionResult Get(int userId)
         {
             return GetResult(() => _userService.GetUser(userId), r => r.User);
         }
 
-        [HttpGet, Authorize(Roles = UserRole.Starosta)]
-        public ActionResult Get()
+        [HttpGet, Authorize(UserRole.Starosta)]
+        public ActionResult GetUsers()
         {
             var response = _userService.GetUsers();
             if (!response.Success)

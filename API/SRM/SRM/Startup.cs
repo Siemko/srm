@@ -10,6 +10,9 @@ using SRM.Services.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using SRM.Authorization;
 using SRM.Common.Configurations;
+using Microsoft.AspNetCore.Authorization;
+using SRM.Common.Constants;
+using Microsoft.AspNetCore.Identity;
 
 namespace SRM
 {
@@ -31,7 +34,8 @@ namespace SRM
 
             // Add Identity services to the services container.
             services.AddIdentity<User, Role>()
-              .AddEntityFrameworkStores<DefaultDbContext>();
+              .AddEntityFrameworkStores<DefaultDbContext>()
+              .AddDefaultTokenProviders();
 
             services.Configure<EmailConfiguration>(Configuration.GetSection("EmailConfiguration"));
 
@@ -41,6 +45,19 @@ namespace SRM
             services.AddScoped<IEmailService, EmailService>();
             services.AddScoped<IStudentGroupService, StudentGroupService>();
             services.AddScoped<IEventService, EventService>();
+
+            services.AddAuthorization(auth =>
+            {
+                auth.AddPolicy("Student", new AuthorizationPolicyBuilder()
+                    .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme)
+                    .AddRequirements(new RoleRequirement(UserRole.Student))
+                    .RequireAuthenticatedUser().Build());
+
+                auth.AddPolicy("Starosta", new AuthorizationPolicyBuilder()
+                    .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme)
+                    .AddRequirements(new RoleRequirement(UserRole.Starosta))
+                    .RequireAuthenticatedUser().Build());
+            });
 
             services.AddAuthentication(o =>
             {
@@ -63,6 +80,7 @@ namespace SRM
             {
                 app.UseDeveloperExceptionPage();
             }
+
 
             app.UseAuthentication();
             app.UseMvc();

@@ -20,6 +20,9 @@ namespace SRM.Services.Contracts.Users
             Description = user.Description;
             StudentNumber = user.StudentNumber;
             StudentGroupId = user.StudentGroupId;
+
+            if(user.Role != null)
+                RoleName = user.Role.Name;
         }
     }
 }

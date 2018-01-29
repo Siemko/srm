@@ -33,4 +33,8 @@ export class LoginComponent implements OnInit {
     // todo: service with login
   }
 
+  handlePasswordRemind() {
+    this.dialog.open(ConfirmationComponent, {});
+  }
+
 }

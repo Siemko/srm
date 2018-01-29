@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppComponent } from './app.component';
 import { LoginModule } from './login/login.module';
+import { RegisterModule } from './register/register.module';
 
 
 @NgModule({
@@ -14,7 +15,8 @@ import { LoginModule } from './login/login.module';
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
-    LoginModule
+    LoginModule,
+    RegisterModule
   ],
   providers: [],
   bootstrap: [AppComponent]

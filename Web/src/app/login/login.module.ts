@@ -13,7 +13,7 @@ import { ConfirmationComponent } from './confirmation/confirmation.component';
     MatDialogModule,
     MatInputModule,
     MatButtonModule,
-    MatCardModule,
+    MatCardModule
   ],
   declarations: [LoginComponent, ConfirmationComponent],
   providers: [

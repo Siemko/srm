@@ -1,0 +1,22 @@
+<form [formGroup]="loginForm">
+<mat-card class="login-card">
+  <mat-card-header>
+    <mat-card-title>
+      <h1>Panel logowania</h1>
+    </mat-card-title>
+  </mat-card-header>
+    <mat-card-content class="login-container">
+      <mat-form-field>
+        <input matInput placeholder="Login" name="login" formControlName="login">
+        <mat-error *ngIf="loginForm.controls.login.invalid">Wymagane pole</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Password" name="password" formControlName="password" type="password">
+        <mat-error *ngIf="loginForm.controls.password.invalid">Wymagane pole</mat-error>
+      </mat-form-field>
+    </mat-card-content>
+    <mat-card-actions class="login-button-container">
+      <button mat-button [color]="'primary'" type="submit" (click)="handleLogin()">ZALOGUJ</button>
+    </mat-card-actions>
+</mat-card>
+</form>

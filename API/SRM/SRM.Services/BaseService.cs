@@ -24,6 +24,7 @@ namespace SRM.Services
         {
             _dbContext = dbContext;
             _logger = logger;
+            _httpContext = httpContextAccessor.HttpContext;
         }
 
         protected UserClaimModel GetCurrentUserClaims()

@@ -7,7 +7,8 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Linq;
 using System.Security.Claims;
-using SRM.Core.Entities.Identity;
+using Microsoft.EntityFrameworkCore;
+using SRM.Services.Contracts.Users.Models;
 
 namespace SRM.Services
 {
@@ -25,11 +26,14 @@ namespace SRM.Services
             _logger = logger;
         }
 
-        protected User GetCurrentUser()
+        protected UserClaimModel GetCurrentUserClaims()
         {
             var userEmail = _httpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            var currentUser = _dbContext.Users.FirstOrDefault(u => u.Email == userEmail);
-            return currentUser;
+            var currentUser = _dbContext.Users
+                                        .Include(u => u.Role)
+                                        .FirstOrDefault(u => u.Email == userEmail);
+
+            return new UserClaimModel(currentUser);
         }
 
         protected TResponse ExecuteAction<TResponse>(Action<TResponse> action) 

@@ -58,7 +58,7 @@ namespace SRM.Services
         {
             return ExecuteAction<GetEventsResponse>((response) =>
             {
-                var user = GetCurrentUser();
+                var user = GetCurrentUserClaims().User;
                 if (user == null)
                     throw new ResourceNotFoundException("User not found.");
                 var ev = _dbContext.Events.FirstOrDefault(e => e.Id == eventId);

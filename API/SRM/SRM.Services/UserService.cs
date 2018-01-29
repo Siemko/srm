@@ -65,6 +65,12 @@ namespace SRM.Services
         {
             return ExecuteAction<GetUserResponse>(response =>
             {
+                var currentUserClaims = GetCurrentUserClaims();
+                if (!currentUserClaims.UserFound)
+                    throw new ResourceNotFoundException("Current user not found.");
+                if (!currentUserClaims.IsStarosta && currentUserClaims.User.Id != userId)
+                    throw new CustomValidationException("User is not allowed to get resource.");
+
                 var user = _dbContext.Users.FirstOrDefault(u => u.Id == userId);
                 if (user == null)
                     throw new ResourceNotFoundException("User not found.");

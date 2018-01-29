@@ -13,6 +13,7 @@ using SRM.Common.Configurations;
 using Microsoft.AspNetCore.Authorization;
 using SRM.Common.Constants;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Http;
 
 namespace SRM
 {
@@ -45,6 +46,8 @@ namespace SRM
             services.AddScoped<IEmailService, EmailService>();
             services.AddScoped<IStudentGroupService, StudentGroupService>();
             services.AddScoped<IEventService, EventService>();
+
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             services.AddAuthorization(auth =>
             {

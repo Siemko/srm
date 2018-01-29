@@ -38,7 +38,7 @@ namespace SRM.Controllers
             return GetResult(() => _userService.UpdateUser(userViewModel.MapToUserModel()), r => r);
         }
 
-        [HttpPut, Route("{userId}"), Authorize(Roles = UserRole.Starosta)]
+        [HttpPut, Route("{userId}/activate"), Authorize(UserRole.Starosta)]
         public ActionResult Activate(int userId)
         {
             var response = _userService.Activate(userId);
@@ -47,7 +47,7 @@ namespace SRM.Controllers
             return Json(response);
         }
 
-        [HttpPut, Route("{userId}"), Authorize(Roles = UserRole.Starosta)]
+        [HttpPut, Route("{userId}/disable"), Authorize(UserRole.Starosta)]
         public ActionResult Disable(int userId)
         {
             var response = _userService.Deactivate(userId);

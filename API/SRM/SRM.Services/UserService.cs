@@ -65,12 +65,7 @@ namespace SRM.Services
         {
             return ExecuteAction<GetUserResponse>(response =>
             {
-                var currentUserClaims = GetCurrentUserClaims();
-                if (!currentUserClaims.UserFound)
-                    throw new ResourceNotFoundException("Current user not found.");
-                if (!currentUserClaims.IsStarosta && currentUserClaims.User.Id != userId)
-                    throw new CustomValidationException("User is not allowed to get resource.");
-
+                AllowedOnlyForStarostaAndOwner(userId);
                 var user = _dbContext.Users.FirstOrDefault(u => u.Id == userId);
                 if (user == null)
                     throw new ResourceNotFoundException("User not found.");
@@ -82,12 +77,15 @@ namespace SRM.Services
         {
             return ExecuteAction<BaseContractResponse>(response =>
             {
+                AllowedOnlyForStarostaAndOwner(model.Id);
                 var user = _dbContext.Users.FirstOrDefault(u => u.Id == model.Id);
                 if (user == null)
                     throw new ResourceNotFoundException("User not found.");
                 user.Description = model.Description;
                 user.StudentGroupId = model.StudentGroupId;
                 user.StudentNumber = model.StudentNumber;
+                user.Name = model.Name;
+                user.Surname = model.Surname;
                 _dbContext.SaveChanges();
             });
         }

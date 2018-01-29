@@ -7,7 +7,8 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Linq;
 using System.Security.Claims;
-using SRM.Core.Entities.Identity;
+using Microsoft.EntityFrameworkCore;
+using SRM.Services.Contracts.Users.Models;
 
 namespace SRM.Services
 {
@@ -23,13 +24,26 @@ namespace SRM.Services
         {
             _dbContext = dbContext;
             _logger = logger;
+            _httpContext = httpContextAccessor.HttpContext;
         }
 
-        protected User GetCurrentUser()
+        protected UserClaimModel GetCurrentUserClaims()
         {
             var userEmail = _httpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            var currentUser = _dbContext.Users.FirstOrDefault(u => u.Email == userEmail);
-            return currentUser;
+            var currentUser = _dbContext.Users
+                                        .Include(u => u.Role)
+                                        .FirstOrDefault(u => u.Email == userEmail);
+
+            return new UserClaimModel(currentUser);
+        }
+
+        protected void AllowedOnlyForStarostaAndOwner(int ownerId)
+        {
+            var currentUserClaims = GetCurrentUserClaims();
+            if (!currentUserClaims.UserFound)
+                throw new ResourceNotFoundException("Current user not found.");
+            if (!currentUserClaims.IsStarosta && currentUserClaims.User.Id != ownerId)
+                throw new CustomValidationException("User is not allowed to get resource.");
         }
 
         protected TResponse ExecuteAction<TResponse>(Action<TResponse> action) 

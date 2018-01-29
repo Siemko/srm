@@ -9,6 +9,7 @@ using Microsoft.Extensions.Logging;
 using System.Linq;
 using SRM.Services.Contracts;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 
 namespace SRM.Services
 {
@@ -29,7 +30,10 @@ namespace SRM.Services
         {
             return ExecuteAction<GetUsersResponse>((response) =>
             {
-                response.Users = _dbContext.Users.Select(u => new UserModel(u)).ToList();
+                response.Users = _dbContext.Users
+                                           .Include(u => u.Role)
+                                           .Include(u => u.StudentGroup)
+                                           .Select(u => new UserModel(u)).ToList();
             });
         }
 
@@ -61,6 +65,7 @@ namespace SRM.Services
         {
             return ExecuteAction<GetUserResponse>(response =>
             {
+                AllowedOnlyForStarostaAndOwner(userId);
                 var user = _dbContext.Users.FirstOrDefault(u => u.Id == userId);
                 if (user == null)
                     throw new ResourceNotFoundException("User not found.");
@@ -72,12 +77,15 @@ namespace SRM.Services
         {
             return ExecuteAction<BaseContractResponse>(response =>
             {
+                AllowedOnlyForStarostaAndOwner(model.Id);
                 var user = _dbContext.Users.FirstOrDefault(u => u.Id == model.Id);
                 if (user == null)
                     throw new ResourceNotFoundException("User not found.");
                 user.Description = model.Description;
                 user.StudentGroupId = model.StudentGroupId;
                 user.StudentNumber = model.StudentNumber;
+                user.Name = model.Name;
+                user.Surname = model.Surname;
                 _dbContext.SaveChanges();
             });
         }

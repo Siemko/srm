@@ -51,7 +51,7 @@ namespace SRM.Services
                 var chat = _dbContext.Chats.FirstOrDefault(c => c.Id == chatId);
                 if (chat == null)
                     throw new ResourceNotFoundException("Chat not found.");
-                var user = GetCurrentUser();
+                var user = GetCurrentUserClaims().User;
                 if (user == null)
                     throw new ResourceNotFoundException("User not found.");
                 if(chat.Users.Any(u => u.Id == user.Id))
@@ -83,7 +83,7 @@ namespace SRM.Services
         {
             return ExecuteAction<GetChatsResponse>(response =>
             {
-                var user = GetCurrentUser();
+                var user = GetCurrentUserClaims().User;
                 if (user == null)
                     throw new ResourceNotFoundException("User not found.");
                 response.Chats = _dbContext.Chats
@@ -96,7 +96,7 @@ namespace SRM.Services
         {
             return ExecuteAction<GetChatResponse>(response =>
             {
-                var user = GetCurrentUser();
+                var user = GetCurrentUserClaims().User;
                 if (user == null)
                     throw new ResourceNotFoundException("User not found.");
                 var chat = _dbContext.Chats
@@ -112,7 +112,7 @@ namespace SRM.Services
         {
             return ExecuteAction<BaseContractResponse>(response =>
             {
-                var user = GetCurrentUser();
+                var user = GetCurrentUserClaims().User;
                 if (user == null)
                     throw new ResourceNotFoundException("User not found.");
                 var chat = _dbContext.Chats
@@ -129,7 +129,7 @@ namespace SRM.Services
         {
             return ExecuteAction<BaseContractResponse>(response =>
             {
-                var user = GetCurrentUser();
+                var user = GetCurrentUserClaims().User;
                 if (user == null)
                     throw new ResourceNotFoundException("User not found.");
                 var message = _dbContext.Messages.FirstOrDefault(m => m.Id == messageId && m.UserId == user.Id);

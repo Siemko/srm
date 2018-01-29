@@ -10,6 +10,8 @@ namespace SRM.Services.Contracts.Users
         public string Description { get; set; }
         public int? StudentGroupId { get; set; }
         public string StudentNumber { get; set; }
+        public string Name { get; set; }
+        public string Surname { get; set; }
 
         public UserModel() { }
 
@@ -20,6 +22,11 @@ namespace SRM.Services.Contracts.Users
             Description = user.Description;
             StudentNumber = user.StudentNumber;
             StudentGroupId = user.StudentGroupId;
+            StudentNumber = user.Name;
+            StudentNumber = user.Surname;
+
+            if (user.Role != null)
+                RoleName = user.Role.Name;
         }
     }
 }

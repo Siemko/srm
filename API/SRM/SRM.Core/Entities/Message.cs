@@ -1,4 +1,5 @@
 ﻿using SRM.Core.Entities.Identity;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -14,6 +15,9 @@ namespace SRM.Core.Entities
 
         [Required]
         public int ChatId { get; set; }
+
+        [Required]
+        public DateTime CreatedAt { get; set; }
 
         [Required, ForeignKey("User")]
         public int UserId { get; set; }

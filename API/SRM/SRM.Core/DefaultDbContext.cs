@@ -19,7 +19,7 @@ namespace SRM.Core
         public DefaultDbContext(DbContextOptions<DefaultDbContext> dbContextOptions) 
             : base(dbContextOptions)
         {
-            Database.EnsureCreated();
+            //Database.EnsureCreated();
         }
 
         public void Migrate()

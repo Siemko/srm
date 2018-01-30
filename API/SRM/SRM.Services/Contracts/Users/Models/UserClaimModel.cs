@@ -7,7 +7,7 @@ namespace SRM.Services.Contracts.Users.Models
     {
         public User User { get; set; }
 
-        public bool UserFound { get; private set; }
+        public bool UserNotFound { get; private set; }
 
         public bool IsStarosta
         {
@@ -30,12 +30,12 @@ namespace SRM.Services.Contracts.Users.Models
         public UserClaimModel(User user)
         {
             User = user;
-            UserFound = user != null;
+            UserNotFound = user == null;
         }
 
         private bool RoleExist()
         {
-            return UserFound && User.Role != null;
+            return !UserNotFound && User.Role != null;
         }
     }
 }

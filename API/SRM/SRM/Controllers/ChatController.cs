@@ -56,7 +56,6 @@ namespace SRM.Controllers
             var model = new MessageModel
             {
                 ChatId = chatId,
-                Author = new UserModel { Id = messageViewModel.UserId },
                 Content = messageViewModel.Content
             };
             return GetResult(() => _chatService.AddMessage(model), r => r);

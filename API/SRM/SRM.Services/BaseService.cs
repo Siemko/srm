@@ -40,7 +40,7 @@ namespace SRM.Services
         protected void AllowedOnlyForStarostaAndOwner(int ownerId)
         {
             var currentUserClaims = GetCurrentUserClaims();
-            if (!currentUserClaims.UserFound)
+            if (currentUserClaims.UserNotFound)
                 throw new ResourceNotFoundException("Current user not found.");
             if (!currentUserClaims.IsStarosta && currentUserClaims.User.Id != ownerId)
                 throw new CustomValidationException("User is not allowed to get resource.");

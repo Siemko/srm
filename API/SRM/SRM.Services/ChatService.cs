@@ -14,6 +14,7 @@ using SRM.Services.Contracts.Chats.Models;
 using SRM.Core.Entities;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace SRM.Services
 {
@@ -30,14 +31,20 @@ namespace SRM.Services
         {
             return ExecuteAction<BaseContractResponse>(response =>
             {
-                var chat = _dbContext.Chats.FirstOrDefault(c => c.Id == model.ChatId);
+                var chat = _dbContext.Chats
+                                    .Include(c => c.Messages)
+                                    .FirstOrDefault(c => c.Id == model.ChatId);
                 if (chat == null)
                     throw new ResourceNotFoundException("Chat not found.");
+                var userClaims = GetCurrentUserClaims();
+                if (userClaims.UserNotFound)
+                    throw new ResourceNotFoundException("User not found");
                 var message = new Message
                 {
                     ChatId = chat.Id,
                     Content = model.Content,
-                    UserId = model.Author.Id
+                    UserId = userClaims.User.Id,
+                    CreatedAt = DateTime.Now
                 };
                 chat.Messages.Add(message);
                 _dbContext.SaveChanges();
@@ -48,7 +55,9 @@ namespace SRM.Services
         {
             return ExecuteAction<BaseContractResponse>(response =>
             {
-                var chat = _dbContext.Chats.FirstOrDefault(c => c.Id == chatId);
+                var chat = _dbContext.Chats
+                                    .Include(c => c.Users)
+                                    .FirstOrDefault(c => c.Id == chatId);
                 if (chat == null)
                     throw new ResourceNotFoundException("Chat not found.");
                 var user = GetCurrentUserClaims().User;
@@ -83,11 +92,8 @@ namespace SRM.Services
         {
             return ExecuteAction<GetChatsResponse>(response =>
             {
-                var user = GetCurrentUserClaims().User;
-                if (user == null)
-                    throw new ResourceNotFoundException("User not found.");
                 response.Chats = _dbContext.Chats
-                                    .Where(c => c.Users.Any(u => u.Id == user.Id))
+                                    .Include(c => c.Users)
                                     .Select(c => new ChatModel(c)).ToList();
             });
         }
@@ -101,7 +107,7 @@ namespace SRM.Services
                     throw new ResourceNotFoundException("User not found.");
                 var chat = _dbContext.Chats
                                 .Include(c => c.Messages)
-                                .FirstOrDefault(c => c.Id == chatId);
+                                .FirstOrDefault(c => c.Id == chatId && c.Users.Any(u => u.Id == user.Id));
                 if (chat == null)
                     throw new ResourceNotFoundException("Chat not found.");
                 response.Chat = new ChatModel(chat, chat.Messages);
@@ -129,12 +135,17 @@ namespace SRM.Services
         {
             return ExecuteAction<BaseContractResponse>(response =>
             {
-                var user = GetCurrentUserClaims().User;
-                if (user == null)
+                var userClaim = GetCurrentUserClaims();
+                if (userClaim.UserNotFound)
                     throw new ResourceNotFoundException("User not found.");
-                var message = _dbContext.Messages.FirstOrDefault(m => m.Id == messageId && m.UserId == user.Id);
+                var message = _dbContext.Messages.FirstOrDefault(m => m.Id == messageId);
                 if (message == null)
                     throw new ResourceNotFoundException("Message not found.");
+                if (!userClaim.IsStarosta)
+                {
+                    if(message.UserId != userClaim.User.Id)
+                        throw new ResourceNotFoundException("Remove this message is not allowed.");
+                }
                 _dbContext.Messages.Remove(message);
                 _dbContext.SaveChanges();
             });

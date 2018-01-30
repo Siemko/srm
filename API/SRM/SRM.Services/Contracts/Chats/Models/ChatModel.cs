@@ -21,18 +21,26 @@ namespace SRM.Services.Contracts.Chats.Models
         {
             Id = chat.Id;
             Name = chat.Name;
+            Users = chat.Users.Select(u => 
+            {
+                return new UserModel
+                {
+                    Name = u.Name,
+                    Surname = u.Surname
+                };
+            }).ToList();
         }
 
         public ChatModel(Chat chat, ICollection<Message> messages)
         {
             Id = chat.Id;
             Name = chat.Name;
-            Messages = messages.Select(m => 
+            Messages = messages.OrderByDescending(m => m.CreatedAt).Select(m => 
             {
                 return new MessageModel()
                 {
-                    ChatId = m.ChatId,
                     Content = m.Content,
+                    CreatedAt = m.CreatedAt,
                     Author = new UserModel
                     {
                         Id = m.User.Id

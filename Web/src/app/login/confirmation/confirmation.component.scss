@@ -1,0 +1,12 @@
+.remind-container {
+    display: flex;
+    flex-direction: column;
+    & > * {
+      width: 100%;
+    }
+  }
+
+.remind-button-container {
+    display: flex;
+    justify-content: flex-end;
+  }

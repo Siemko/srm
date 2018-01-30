@@ -7,6 +7,8 @@ using SRM.Common.Exceptions;
 using SRM.Core.Entities;
 using SRM.Services.Contracts;
 using Microsoft.AspNetCore.Http;
+using SRM.Services.Contracts.Events.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace SRM.Services
 {
@@ -51,20 +53,28 @@ namespace SRM.Services
 
                 _dbContext.Events.Add(newEvent);
                 _dbContext.SaveChanges();
+                response.EventId = newEvent.Id;
             });
         }
 
-        public BaseContractResponse AssignToEvent(int eventId)
+        public BaseContractResponse AssignToEvent(int eventId, int userId)
         {
             return ExecuteAction<GetEventsResponse>((response) =>
             {
-                var user = GetCurrentUserClaims().User;
-                if (user == null)
+                var userClaim = GetCurrentUserClaims();
+                if (userClaim.UserNotFound)
                     throw new ResourceNotFoundException("User not found.");
-                var ev = _dbContext.Events.FirstOrDefault(e => e.Id == eventId);
+                if (!userClaim.IsStarosta && userId != userClaim.User.Id)
+                    throw new CustomValidationException("This action is not allowed.");
+                var ev = _dbContext.Events
+                                    .Include(e => e.Users)
+                                    .FirstOrDefault(e => e.Id == eventId);
                 if (ev == null)
                     throw new ResourceNotFoundException("Event not found.");
-                if(ev.Users.Any(u => u.Id == user.Id))
+                var user = _dbContext.Users.FirstOrDefault(u => u.Id == userId);
+                if (user == null)
+                    throw new ResourceNotFoundException("User not found.");
+                if (ev.Users.Any(u => u.Id == user.Id))
                     throw new DuplicateResourceException("User is currently assigned to event.");
                 ev.Users.Add(user);
                 _dbContext.SaveChanges();
@@ -91,6 +101,14 @@ namespace SRM.Services
             });
         }
 
+        public GetEventCategoriesResponse GetEventCategories()
+        {
+            return ExecuteAction<GetEventCategoriesResponse>((response) =>
+            {
+                response.EventCategories = _dbContext.EventCategories.Select(c => new EventCategoryModel(c)).ToList();
+            });
+        }
+
         public GetEventsResponse GetEvents()
         {
             return ExecuteAction<GetEventsResponse>((response) =>
@@ -103,7 +121,14 @@ namespace SRM.Services
         {
             return ExecuteAction<GetEventsResponse>((response) =>
             {
-                var ev = _dbContext.Events.FirstOrDefault(e => e.Id == eventId);
+                var userClaim = GetCurrentUserClaims();
+                if (userClaim.UserNotFound)
+                    throw new ResourceNotFoundException("User not found.");
+                if (!userClaim.IsStarosta && userId != userClaim.User.Id)
+                    throw new CustomValidationException("This action is not allowed.");
+                var ev = _dbContext.Events
+                                    .Include(e => e.Users)
+                                    .FirstOrDefault(e => e.Id == eventId);
                 if (ev == null)
                     throw new ResourceNotFoundException("Event not found.");
                 var user = ev.Users.FirstOrDefault(u => u.Id == userId);

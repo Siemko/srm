@@ -5,6 +5,6 @@ namespace SRM.Services.Interfaces
 {
     public interface IStudentGroupService
     {
-        BaseContractResponse Add(StudentGroupModel model);
+        GetStudentGroupsResponse Get();
     }
 }

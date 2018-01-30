@@ -45,6 +45,28 @@ namespace SRM.Core
                 context.Chats.Add(mainChat);
                 context.SaveChanges();
             }
+            if (!context.EventCategories.Any())
+            {
+                var categories = new List<EventCategory>
+                {
+                    new EventCategory { Name = "Obieralne" },
+                    new EventCategory { Name = "Sekcja" },
+                    new EventCategory { Name = "Inne" }
+                };
+                context.EventCategories.AddRange(categories);
+                context.SaveChanges();
+            }
+            if (!context.StudentGroups.Any())
+            {
+                var studentGroups = new List<StudentGroup>
+                {
+                    new StudentGroup { Name = "ITS 1" },
+                    new StudentGroup { Name = "ITS 2" },
+                    new StudentGroup { Name = "OS" }
+                };
+                context.StudentGroups.AddRange(studentGroups);
+                context.SaveChanges();
+            }
         }
     }
 }

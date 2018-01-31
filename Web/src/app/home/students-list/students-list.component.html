@@ -1,5 +1,13 @@
 <div class="students-list">
 
+      <div class="students-groups-list">
+          <mat-nav-list>
+              <mat-list-item *ngFor="let studentGroup of studentsGroupsList">
+                 <a matLine>{{ studentGroup.name }}</a>
+              </mat-list-item>
+            </mat-nav-list>
+      </div>
+
       <div class="example-container mat-elevation-z8">
         <mat-table #table [dataSource]="dataSource">
 
@@ -9,17 +17,17 @@
           </ng-container>
 
           <ng-container matColumnDef="name">
-            <mat-header-cell *matHeaderCellDef> Imię: </mat-header-cell>
+            <mat-header-cell *matHeaderCellDef > Imię: </mat-header-cell>
             <mat-cell *matCellDef="let student"> {{student.name}} </mat-cell>
           </ng-container>
 
           <ng-container matColumnDef="surname">
-            <mat-header-cell *matHeaderCellDef> Nazwisko: </mat-header-cell>
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Nazwisko: </mat-header-cell>
             <mat-cell *matCellDef="let student"> {{student.surname}} </mat-cell>
           </ng-container>
       
           <ng-container matColumnDef="studentNumber">
-            <mat-header-cell *matHeaderCellDef> Nr albumu: </mat-header-cell>
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Nr albumu: </mat-header-cell>
             <mat-cell *matCellDef="let student"> {{student.studentNumber}} </mat-cell>
           </ng-container>
 

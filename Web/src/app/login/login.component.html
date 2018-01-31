@@ -9,11 +9,15 @@
       <mat-card-content class="login-container">
         <mat-form-field>
           <input matInput placeholder="Email" name="email" formControlName="email">
-          <span matSuffix><i class="fa fa-fw fa-envelope"></i></span>
+          <span matSuffix>
+            <i class="fa fa-fw fa-envelope"></i>
+          </span>
         </mat-form-field>
         <mat-form-field>
           <input matInput placeholder="Password" name="password" formControlName="password" type="password">
-          <span matSuffix><i class="fa fa-fw fa-lock"></i></span>
+          <span matSuffix>
+            <i class="fa fa-fw fa-lock"></i>
+          </span>
         </mat-form-field>
         <div class="login-button-container">
           <button mat-raised-button [color]="'primary'" type="submit" (click)="handleLogin()">zaloguj się</button>

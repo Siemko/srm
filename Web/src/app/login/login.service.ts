@@ -4,13 +4,15 @@ import { User } from '../../models/user';
 import { Router } from '@angular/router';
 import { HttpService } from '../_services/http.service';
 import { LoginModel } from './models/login.model';
+import { LoginResponseModel } from './models/login-response.model';
+import { LocalStorageConst } from '../_consts/local-storage.const';
 
 @Injectable()
 export class LoginService {
 
   constructor(private http: HttpService, private router: Router) { }
 
-  login(model: LoginModel): Observable<any> {
+  login(model: LoginModel): Observable<LoginResponseModel> {
     return this.http.post("api/authentication/sign-in", model).map(res => res.json());
   }
 
@@ -23,26 +25,23 @@ export class LoginService {
     return !this.isLoggedIn();
   }
 
-  getUser() {
-    if (this.isLoggedIn()) {
-      const user = new User();
-      user.login = 'starosta';
-      user.name = 'Dawid';
-      user.surname = 'Świerczek';
-      user.role = 'Admin';
-
-      return user;
-    }
-    return null;
-  }
-
-   saveToken(token: string) {
-    localStorage.setItem('token', token);
-  }
-
-  public signOut() {
-    localStorage.removeItem('token');
+  signOut() {
+    this.clearLoginModel();
     this.router.navigate(['/login']);
+  }
+
+  saveLoginModel(model: LoginResponseModel) {
+    localStorage.setItem(LocalStorageConst.TOKEN, model.token);
+    localStorage.setItem(LocalStorageConst.USER_ID, model.id.toString());
+    localStorage.setItem(LocalStorageConst.USER_EMAIL, model.userName);
+    localStorage.setItem(LocalStorageConst.ROLE_NAME, model.roleName);
+  }
+
+  private clearLoginModel() {
+    localStorage.removeItem(LocalStorageConst.TOKEN);
+    localStorage.removeItem(LocalStorageConst.USER_ID);
+    localStorage.removeItem(LocalStorageConst.USER_EMAIL);
+    localStorage.removeItem(LocalStorageConst.ROLE_NAME);
   }
 
 

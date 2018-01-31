@@ -6,13 +6,14 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import { LoginService } from '../login/login.service';
+import { ToastrService } from 'ngx-toastr';
 declare var $: any;
 
 @Injectable()
 export class HttpService {
 
     constructor(private http: Http,
-        private router: Router) {
+        private router: Router, private toastr: ToastrService) {
     }
 
     get(url: string, options?: RequestOptionsArgs): Observable<Response> {
@@ -46,21 +47,22 @@ export class HttpService {
     }
 
     setHeaders(options: RequestOptionsArgs): RequestOptionsArgs {
-        if (!options) options = { headers: new Headers() };
+        if (!options) { options = { headers: new Headers() }; }
 
         if (!options) {
             options = { headers: new Headers() };
         }
 
-        if (!options.headers)
+        if (!options.headers) {
             options.headers = new Headers();
+        }
 
         options.headers.set('Authorization', `Bearer ${localStorage.getItem('token')}`);
         return options;
     }
 
     static prepareUrl(url: string): string {
-        if (window.location.hostname == 'localhost' && window.location.port == '4200') {
+        if (window.location.hostname === 'localhost' && window.location.port === '4200') {
             return `http://localhost:5999/${url}`;
         }
         return url;
@@ -68,7 +70,8 @@ export class HttpService {
 
     private catchError() {
         return (res: Response) => {
-            if (res.status == 401) {
+            if (!res.ok) { this.toastr.error(`${res.json().message}`); }
+            if (res.status === 401) {
                 localStorage.removeItem('token');
                 this.router.navigate(['/login']);
                 return;
@@ -76,9 +79,8 @@ export class HttpService {
 
             let msg;
             try {
-                msg = res.json().Message;
-            }
-            catch (e) {
+                msg = res.json().message;
+            } catch (e) {
                 msg = res.text();
             }
 
@@ -86,6 +88,7 @@ export class HttpService {
             if (res.status === 401 || res.status === 403) {
                 this.router.navigate(['/login']);
             }
+
             return Observable.throw(res);
         };
     }

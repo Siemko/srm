@@ -2,6 +2,7 @@
 @import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
 $fa-font-path:"../node_modules/font-awesome/fonts";
 @import "../node_modules/font-awesome/scss/font-awesome";
+@import "~ngx-toastr/toastr";
 
 .icon-user {
   @extend .fa;

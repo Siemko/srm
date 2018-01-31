@@ -8,7 +8,7 @@ import { RegisterModule } from './register/register.module';
 import { HomeModule } from './home/home.module';
 import { HttpModule } from '@angular/http';
 import { AuthGuard } from './_guards/auth.guard';
-
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
@@ -21,7 +21,8 @@ import { AuthGuard } from './_guards/auth.guard';
     LoginModule,
     RegisterModule,
     HomeModule,
-    HttpModule
+    HttpModule,
+    ToastrModule.forRoot(),
   ],
   exports: [
     AppRoutingModule

@@ -4460,6 +4460,10 @@ netmask@~1.0.4:
   version "1.0.6"
   resolved "https://registry.yarnpkg.com/netmask/-/netmask-1.0.6.tgz#20297e89d86f6f6400f250d9f4f6b4c1945fcd35"
 
+ngx-toastr@^8.1.1:
+  version "8.1.1"
+  resolved "https://registry.yarnpkg.com/ngx-toastr/-/ngx-toastr-8.1.1.tgz#f34a57c8dfadf49392978bfb37019247700458b1"
+
 no-case@^2.2.0:
   version "2.3.2"
   resolved "https://registry.yarnpkg.com/no-case/-/no-case-2.3.2.tgz#60b813396be39b3f1288a4c1ed5d1e7d28b464ac"

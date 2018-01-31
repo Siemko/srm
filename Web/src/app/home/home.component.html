@@ -1,5 +1,6 @@
 <div class="home">
-  <app-header></app-header>
-  <router-outlet></router-outlet>
-  
+  <mat-sidenav-container class="example-container">
+    <mat-sidenav mode="side" opened="true"><navigation></navigation></mat-sidenav>
+    <mat-sidenav-content><router-outlet></router-outlet></mat-sidenav-content>
+  </mat-sidenav-container>
 </div>

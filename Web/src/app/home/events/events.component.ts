@@ -11,7 +11,7 @@ import { AddEventComponent } from './add-event/add-event.component';
 export class EventsComponent implements OnInit {
   events: any[] = [];
   joined = false;
-
+  eventsCategories: any[] = [];
   constructor(private eventsService: EventsService, private dialog: MatDialog) {
   }
 
@@ -29,8 +29,8 @@ export class EventsComponent implements OnInit {
     const addEventDialog = this.dialog.open(AddEventComponent, {});
 
     addEventDialog.afterClosed().subscribe(result => {
-      if(result) {
-        this.events.push(result);
+      if (result) {
+        this.getEvents();
       }
     });
   }

@@ -1,29 +1,29 @@
+import { AddEventDTO } from './../../login/models/addEvent.dto';
 import { Observable } from 'rxjs/Observable';
 import { Injectable } from '@angular/core';
+import { HttpService } from '../../_services/http.service';
 
 @Injectable()
 export class EventsService {
 
-  constructor() { }
+  constructor(private http: HttpService) { }
 
   getEvents() {
-    return new Observable(observer => {
-      observer.next([
-        { name: 'Zapisy', description: 'na piwo', activated: true },
-        { name: 'Podpisy', description: 'oceny', activated: false}
-      ]);
-    });
+    return this.http.get(`api/event`).map(res => res.json());
   }
 
-  addEvent(name: string, description: string) {
-    return new Observable(observer => {
-      observer.next({
-        name,
-        description,
-        activated: false,
-        users: []
-      });
-    });
+  getEventsCategories() {
+    return this.http.get(`api/event/categories`).map(res => res.json());
+  }
+
+  addEvent(name: string, description: string, category: number, max: number) {
+    const model: AddEventDTO = {
+      name: name,
+      description: description,
+      categoryId: category,
+      maxNumberOfPerson: max
+    };
+    return this.http.post(`api/event`, model).map(res => res.json());
   }
 
   activate(event: any) {

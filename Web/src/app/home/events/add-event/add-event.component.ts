@@ -11,28 +11,40 @@ import { EventsService } from '../events.service';
 })
 export class AddEventComponent implements OnInit {
   addEventForm: FormGroup;
+  eventsCategories: any[] = [];
 
   constructor(private dialogRef: MatDialogRef<AddEventComponent>, private eventsService: EventsService) { }
 
   ngOnInit() {
+    this.getEventsCategories();
     this.initForm();
   }
 
   initForm() {
     this.addEventForm = new FormGroup({
       name: new FormControl('', Validators.required),
-      description: new FormControl('', Validators.required)
+      description: new FormControl('', Validators.required),
+      category: new FormControl('', Validators.required),
+      maxNumberOfPerson: new FormControl(0, Validators.required)
     });
   }
 
   addEvent() {
-    if(this.addEventForm.valid) {
-      this.eventsService.addEvent(this.addEventForm.value.name, this.addEventForm.value.description).subscribe(result => {
+    if (this.addEventForm.valid) {
+      this.eventsService.addEvent(this.addEventForm.value.name, this.addEventForm.value.description,
+         this.addEventForm.value.category, this.addEventForm.value.maxNumberOfPerson).subscribe(result => {
         if(result) {
           this.dialogRef.close(result);
         }
       });
     }
+  }
+
+
+  getEventsCategories() {
+    this.eventsService.getEventsCategories().subscribe((result: any[]) => {
+      this.eventsCategories = result;
+    });
   }
 
   cancel() {

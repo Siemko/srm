@@ -10,8 +10,8 @@ import { MatTableDataSource } from '@angular/material';
 export class StudentsListComponent implements OnInit {
   studentsList: any[];
   displayedColumns = ['id', 'name', 'surname', 'studentNumber', 'action'];
+  studentsGroupsList: any[];
 
-  
   dataSource = new MatTableDataSource<any>(this.studentsList);
   loading: boolean = true;
 
@@ -20,14 +20,22 @@ export class StudentsListComponent implements OnInit {
 
 
   ngOnInit() {
+    this.getStudetnsGroupsList();
     this.getStudentsList();
   }
 
   getStudentsList() {
     this.studentsListService.getStudentsList().subscribe((result: any[]) => {
+      console.log(result)
       this.studentsList = result;
       this.dataSource = new MatTableDataSource<any>(this.studentsList);
       this.changeDetectorRefs.detectChanges();
+    });
+  }
+
+  getStudetnsGroupsList() {
+    this.studentsListService.getStudentsGroupsList().subscribe((result: any[]) => {
+      this.studentsGroupsList = result;
     });
   }
 

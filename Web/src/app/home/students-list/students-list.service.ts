@@ -18,4 +18,8 @@ export class StudentsListService {
   banStudent(studentId: number) {
     return this.http.put(`api/user/${studentId}/disable`, {}).map(res => res.json());
   }
+
+  getStudentsGroupsList(): Observable<any> {
+    return this.http.get(`api/studentgroup`).map(res => res.json());
+  }
 }

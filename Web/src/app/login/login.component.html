@@ -3,25 +3,28 @@
     <mat-card class="login-card">
       <mat-card-header>
         <mat-card-title>
-          <h1>Panel logowania</h1>
+          <h1><i class="fa fa-fw fa-sign-in"></i> Logowanie</h1>
         </mat-card-title>
       </mat-card-header>
       <mat-card-content class="login-container">
         <mat-form-field>
           <input matInput placeholder="Login" name="login" formControlName="login">
+          <span matSuffix><i class="fa fa-fw fa-user"></i></span>
           <mat-error *ngIf="loginForm.controls.login.invalid">Wymagane pole</mat-error>
         </mat-form-field>
         <mat-form-field>
           <input matInput placeholder="Password" name="password" formControlName="password" type="password">
+          <span matSuffix><i class="fa fa-fw fa-lock"></i></span>
           <mat-error *ngIf="loginForm.controls.password.invalid">Wymagane pole</mat-error>
         </mat-form-field>
+        <div class="login-button-container">
+          <button mat-raised-button [color]="'primary'" type="submit" (click)="handleLogin()">zaloguj się</button>
+          <hr/>
+          <a mat-raised-button [color]="'accent'" routerLink="/register">Załóż nowe konto </a>
+          <button mat-button type="button" (click)="handlePasswordRemind()">Zapomnialeś hasła?</button>
+        </div>
       </mat-card-content>
-      <mat-card-actions class="login-button-container">
-        <button mat-button [color]="'yellow'" type="button" (click)="handlePasswordRemind()">ZAPOMNIAŁEŚ HASŁA?</button>
-        <button mat-button [color]="'primary'" type="submit" (click)="handleLogin()">ZALOGUJ</button>
-      </mat-card-actions>
     </mat-card>
   </form>
-  <a routerLink="/register">Nie masz konta? Zarejestruj</a>
   <router-outlet></router-outlet>
 </div>

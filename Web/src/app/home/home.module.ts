@@ -1,3 +1,4 @@
+import { EventDetailsComponent } from './events/event-details/event-details.component';
 import { ChatsService } from './chats/chats.service';
 import { StudentsListService } from './students-list/students-list.service';
 import { HomeRoutingModule } from './home-routing.module';
@@ -37,8 +38,8 @@ import { ProfileService } from './profile/profile.service';
     MatSelectModule
   ],
   declarations: [HomeComponent, NavigationComponent, StudentsListComponent, EventsComponent,
-     ChatsComponent, AddEventComponent, AddChatComponent, SingleChatComponent, ProfileComponent],
+     ChatsComponent, AddEventComponent, AddChatComponent, SingleChatComponent, ProfileComponent, EventDetailsComponent],
   providers: [StudentsListService, EventsService, ChatsService, ProfileService],
-  entryComponents: [AddEventComponent, AddChatComponent, SingleChatComponent]
+  entryComponents: [AddEventComponent, AddChatComponent, SingleChatComponent, EventDetailsComponent]
 })
 export class HomeModule { }

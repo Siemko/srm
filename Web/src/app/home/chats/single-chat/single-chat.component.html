@@ -1,0 +1,15 @@
+<div class="single-chat">
+  <div mat-dialog-title>Czat {{chat.name}}</div>
+  <div mat-dialog-content>
+    <mat-nav-list>
+      <mat-list-item *ngFor="let message of chat.messages">
+        <a matLine>{{ message }}</a>
+        <!-- <button mat-raised-button [color]="'prim *ngIf="event.users.some(u => u.albumNumber === loggedUser.albumNumber)" (click)="resign(event)">Zrezygnuj</button> -->
+      </mat-list-item>
+    </mat-nav-list>
+    <mat-form-field>
+      <input matInput placeholder="Wiadomość" name="name" [(ngModel)]="message">
+    </mat-form-field>
+    <button mat-raised-button [color]="'primary'" (click)="addMessage()">Wyślij</button>
+  </div>
+</div>

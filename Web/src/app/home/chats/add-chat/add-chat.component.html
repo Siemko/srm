@@ -1,0 +1,14 @@
+<div class="add-event">
+    <div mat-dialog-title>Dodawanie czatu</div>
+    <div mat-dialog-content>
+      <form [formGroup]="addChatForm">
+        <mat-form-field>
+          <input matInput placeholder="Nazwa" name="name" formControlName="name">
+        </mat-form-field>
+      </form>
+    </div>
+    <div mat-dialog-actions>
+      <button mat-raised-button [color]="'primary'" type="submit" (click)="addChat()">Dodaj</button>
+      <button mat-raised-button [color]="'warn'" type="button" (click)="cancel()">Anuluj</button>
+    </div>
+  </div>

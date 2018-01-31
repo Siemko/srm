@@ -1,0 +1,11 @@
+.chats-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+
+    .chats, .messages {
+        padding: 0 1rem 0 1rem;
+        width: 50%;
+    }
+}

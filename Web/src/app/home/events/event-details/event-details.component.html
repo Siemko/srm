@@ -1,3 +1,17 @@
-<p>
-  event-details works!
-</p>
+<div class="event-details">
+    <div mat-dialog-title>Szczegóły wydarzenia</div>
+    <div mat-dialog-content>
+        <mat-nav-list>
+            <mat-list-item *ngFor="let student of students">
+               <a matLine>{{ student.name }}</a>
+               <button mat-raised-button [color]="'warn'" (click)="deleteStudent(student)">Usuń</button>
+            </mat-list-item>
+          </mat-nav-list>
+    </div>
+    <div mat-dialog-actions>
+        <button mat-button [matMenuTriggerFor]="menu">Dodaj</button>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item *ngFor="let student of activeStudents" (click)="addStudent(student)">{{student.name + ' ' + student.surname + ' ' + student.studentNumber}}</button>
+        </mat-menu>
+    </div>
+  </div>

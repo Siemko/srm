@@ -26,6 +26,16 @@ export class EventsService {
     return this.http.post(`api/event`, model).map(res => res.json());
   }
 
+  getEventStudents() {
+    return new Observable(observer => {
+      observer.next([
+        {name: 'Daw'},
+        {name: 'Kuba'},
+        {name: 'Janek'}
+      ]);
+    });
+  }
+
   activate(event: any) {
     return new Observable(observer => {
       event.activated = true;
@@ -38,5 +48,9 @@ export class EventsService {
       event.activated = false;
       observer.next(event);
     });
+  }
+
+  joinEvent(eventId: number, userId: number) {
+    return this.http.put(`api/event/${eventId}/assign-user/${userId}`, {}).map(res => res.json());
   }
 }

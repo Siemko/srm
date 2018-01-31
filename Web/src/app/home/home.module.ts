@@ -11,7 +11,7 @@ import { StudentsListComponent } from './students-list/students-list.component';
 import { EventsComponent } from './events/events.component';
 import { ChatsComponent } from './chats/chats.component';
 import { MatListModule, MatIconModule, MatButtonModule, MatDialogModule,
-   MatFormFieldModule, MatInputModule, MatTableModule, MatSelectModule } from '@angular/material';
+   MatFormFieldModule, MatInputModule, MatTableModule, MatSelectModule, MatMenuModule } from '@angular/material';
 import { EventsService } from './events/events.service';
 import { AddEventComponent } from './events/add-event/add-event.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
@@ -35,7 +35,8 @@ import { ProfileService } from './profile/profile.service';
     MatInputModule,
     MatSidenavModule,
     MatTableModule,
-    MatSelectModule
+    MatSelectModule,
+    MatMenuModule
   ],
   declarations: [HomeComponent, NavigationComponent, StudentsListComponent, EventsComponent,
      ChatsComponent, AddEventComponent, AddChatComponent, SingleChatComponent, ProfileComponent, EventDetailsComponent],

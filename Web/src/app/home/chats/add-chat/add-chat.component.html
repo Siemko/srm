@@ -5,6 +5,11 @@
         <mat-form-field>
           <input matInput placeholder="Nazwa" name="name" formControlName="name">
         </mat-form-field>
+        <mat-form-field>
+            <mat-select placeholder="Studenci" name="studentIds" formControlName="studentIds" multiple>
+              <mat-option *ngFor="let student of students" [value]="student.id">{{student.name}}</mat-option>
+            </mat-select>
+          </mat-form-field>
       </form>
     </div>
     <div mat-dialog-actions>

@@ -7,7 +7,7 @@ export class ChatsService {
   constructor(private http: HttpService) { }
 
   getChats() {
-    return this.http.get("api/chat/").map(res => res.json());
+    return this.http.get(`api/chat/`).map(res => res.json());
   }
 
   getMessages(chatId: number) {
@@ -15,7 +15,7 @@ export class ChatsService {
   }
 
   addChat(chat: any) {
-    return this.http.post("api/chat/", chat).map(res => res.json());
+    return this.http.post(`api/chat/`, chat).map(res => res.json());
   }
 
   assignToChat(chatId: any) {

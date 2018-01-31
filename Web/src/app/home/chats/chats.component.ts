@@ -11,6 +11,7 @@ import { AddChatComponent } from './add-chat/add-chat.component';
 })
 export class ChatsComponent implements OnInit {
   chats: any[];
+  messages: any[];
 
   constructor(private chatsService: ChatsService, private dialog: MatDialog) { }
 
@@ -29,7 +30,7 @@ export class ChatsComponent implements OnInit {
 
     addchatDialog.afterClosed().subscribe(result => {
       if(result) {
-        this.chats.push(result);
+        this.getChats();
       }
     });
   }
@@ -40,7 +41,13 @@ export class ChatsComponent implements OnInit {
     });
 
     singleChatDialog.afterClosed().subscribe(result => {
-      
+      console.log(result);
+    });
+  }
+
+  getMessages(chat) {
+    this.chatsService.getMessages(chat.id).subscribe((result: any[]) => {
+      this.messages = result;
     });
   }
 }

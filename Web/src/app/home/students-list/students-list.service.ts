@@ -11,17 +11,11 @@ export class StudentsListService {
     return this.http.get("api/user").map(res => res.json());
   }
 
-  activateStudent(student: any) {
-    return new Observable(observer => {
-      student.activated = true;
-      observer.next(student);
-    });
+  activateStudent(studentId: number) {
+    return this.http.put(`api/user/${studentId}/activate`, {}).map(res => res.json());
   }
 
-  banStudent(student: any) {
-    return new Observable(observer => {
-      student.banned = true;
-      observer.next(student);
-    });
+  banStudent(studentId: number) {
+    return this.http.put(`api/user/${studentId}/disable`, {}).map(res => res.json());
   }
 }

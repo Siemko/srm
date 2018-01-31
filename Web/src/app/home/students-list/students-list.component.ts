@@ -28,19 +28,17 @@ export class StudentsListComponent implements OnInit {
       this.studentsList = result;
       this.dataSource = new MatTableDataSource<any>(this.studentsList);
       this.changeDetectorRefs.detectChanges();
-      console.log(result);
-      
     });
   }
 
   banStudent(student) {
-    this.studentsListService.banStudent(student).subscribe(result => {
+    this.studentsListService.banStudent(student.id).subscribe(result => {
 
     });
   }
 
   activateStudent(student) {
-    this.studentsListService.activateStudent(student).subscribe(result => {
+    this.studentsListService.activateStudent(student.id).subscribe(result => {
       
     });
   }

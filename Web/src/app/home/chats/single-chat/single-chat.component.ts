@@ -19,8 +19,8 @@ export class SingleChatComponent implements OnInit {
 
   ngOnInit() {
     this.chatsService.getMessages(this.chat.id).subscribe(r => {
-      this.chat.messages = r.messages
-      console.log(this.chat)
+      this.chat.messages = r.messages;
+      console.log(this.chat);
     })
   }
 

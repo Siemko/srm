@@ -1,16 +1,21 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { User } from '../../models/user';
+import { Router } from '@angular/router';
+import { HttpService } from '../_services/http.service';
+import { LoginModel } from './models/login.model';
 
 @Injectable()
 export class LoginService {
 
-  constructor() { }
+  constructor(private http: HttpService, private router: Router) { }
 
-  login(login: string, password: string) {
-    return new Observable(observer => {
-      observer.next('xxxx');
-    });
+  login(model: LoginModel): Observable<any> {
+    return this.http.post("api/authentication/sign-in", model).map(res => res.json());
+  }
+
+  register(model: RegisterModel): Observable<any> {
+    return this.http.post("api/authentication/sign-in", model).map(res => res.json());
   }
 
   isLoggedIn() {
@@ -35,7 +40,14 @@ export class LoginService {
     return null;
   }
 
-  private saveToken(token: string) {
+   saveToken(token: string) {
     localStorage.setItem('token', token);
   }
+
+  public signOut() {
+    localStorage.removeItem('token');
+    this.router.navigate(['/login']);
+  }
+
+
 }

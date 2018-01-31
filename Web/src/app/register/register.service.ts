@@ -1,17 +1,15 @@
 import { Injectable } from '@angular/core';
 import { RegisterDTO } from '../../models/register.dto';
 import { Observable } from 'rxjs/Observable';
+import { HttpService } from '../_services/http.service';
 
 @Injectable()
 export class RegisterService {
 
-  constructor() { }
+  constructor(private http: HttpService) { }
 
-  register(registerDTO: RegisterDTO) {
-    // STRZELAJ DO API
-    return new Observable(observer => {
-      observer.next(true);
-    }); // było ok, można się zalogować
+  register(model: RegisterDTO): Observable<any> {
+    return this.http.post("api/authentication/sign-up", model).map(res => res.json());
   }
 
 }

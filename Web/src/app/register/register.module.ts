@@ -10,6 +10,7 @@ import {
   MatCardModule
 } from "@angular/material";
 import { RouterModule } from "@angular/router";
+import { ServiceModule } from '../_services/service.module';
 
 @NgModule({
   imports: [
@@ -20,7 +21,8 @@ import { RouterModule } from "@angular/router";
     MatButtonModule,
     MatCardModule,
     RouterModule,
-    AppRoutingModule
+    AppRoutingModule,
+    ServiceModule
   ],
   providers: [RegisterService],
   declarations: [RegisterComponent]

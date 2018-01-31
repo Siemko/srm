@@ -6,6 +6,8 @@ import { AppComponent } from './app.component';
 import { LoginModule } from './login/login.module';
 import { RegisterModule } from './register/register.module';
 import { HomeModule } from './home/home.module';
+import { HttpModule } from '@angular/http';
+import { AuthGuard } from './_guards/auth.guard';
 
 
 @NgModule({
@@ -19,11 +21,12 @@ import { HomeModule } from './home/home.module';
     LoginModule,
     RegisterModule,
     HomeModule,
+    HttpModule
   ],
   exports: [
     AppRoutingModule
   ],
-  providers: [],
+  providers: [AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

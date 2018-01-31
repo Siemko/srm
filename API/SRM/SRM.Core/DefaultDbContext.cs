@@ -38,7 +38,7 @@ namespace SRM.Core
         public DefaultDbContext CreateDbContext(string[] args)
         {
             var optionsBuilder = new DbContextOptionsBuilder<DefaultDbContext>()
-                .UseSqlServer("Data Source=DESKTOP-MJNMD1S;MultipleActiveResultSets=True;Initial Catalog=srm;Integrated Security=True");
+                .UseSqlServer("Data Source=DESKTOP-N6PC0RN\\SQLEXPRESS;MultipleActiveResultSets=True;Initial Catalog=srm;Integrated Security=True");
 
             return new DefaultDbContext(optionsBuilder.Options);
         }

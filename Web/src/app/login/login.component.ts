@@ -31,13 +31,14 @@ export class LoginComponent implements OnInit {
 
   handleLogin() {
     if(this.loginForm.valid) {
-      this.loginService.login(this.loginForm.value.email, this.loginForm.value.password).subscribe(result => {
-        if(result) {
-          this.router.navigate(['home']);
+      this.loginService.login({email: this.loginForm.value.email, password: this.loginForm.value.password}).subscribe(result => {
+        console.log(result);
+        if(result.token) {
+          this.loginService.saveToken(result.token);
+          this.router.navigate(['/home']);
         }
       });
     }
-    // todo: service with login
   }
 
   handlePasswordRemind() {

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using SRM.Services.Contracts;
 using System;
@@ -9,6 +10,7 @@ namespace SRM.Controllers
     [Authorize(AuthenticationSchemes = "Bearer")]
     [Route("api/[controller]")]
     [Produces("application/json")]
+    [EnableCors("MyPolicy")]
     public class BaseController : Controller
     {
         protected IActionResult GetResult<T>(Func<T> action, Func<T, object> result)

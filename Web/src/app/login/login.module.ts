@@ -6,6 +6,8 @@ import { LoginComponent } from './login.component';
 import {  MatInputModule, MatButtonModule, MatDialogModule, MatCardModule } from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ConfirmationComponent } from './confirmation/confirmation.component';
+import { ServiceModule } from '../_services/service.module';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -15,7 +17,8 @@ import { ConfirmationComponent } from './confirmation/confirmation.component';
     MatInputModule,
     MatButtonModule,
     MatCardModule,
-    AppRoutingModule
+    AppRoutingModule,
+    ServiceModule
   ],
   declarations: [LoginComponent, ConfirmationComponent],
   providers: [

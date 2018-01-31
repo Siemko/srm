@@ -2,19 +2,18 @@ ul {
     list-style-type: none;
     margin: 0;
     padding: 0;
-    background-color: #f1f1f1;
-    font-size: 0.8em;
+    font-size: 1.0em;
     font-family: Roboto,"Helvetica Neue",sans-serif;
 
     li a {
         display: block;
-        color: #000;
-        padding: 8px 16px;
+        padding: 10px 20px;
         text-decoration: none;
+        color: #757575;
     }
     
     li a:hover {
-        background-color: #555;
-        color: white;
+        background-color: #d2d2d2;
+        color: #673ab7;
     }
 }

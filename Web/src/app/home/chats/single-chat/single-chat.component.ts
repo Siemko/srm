@@ -8,7 +8,7 @@ import { MAT_DIALOG_DATA } from '@angular/material';
   styleUrls: ['./single-chat.component.scss']
 })
 export class SingleChatComponent implements OnInit {
-  message = 'chuj';
+  message = '';
   chat: any;
 
   constructor(@Inject(MAT_DIALOG_DATA) data: any, private chatsService: ChatsService) {
@@ -18,11 +18,15 @@ export class SingleChatComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.chatsService.getMessages(this.chat.id).subscribe(r => {
+      this.chat.messages = r.messages
+      console.log(this.chat)
+    })
   }
 
   addMessage() {
     if(this.message) {
-      this.chatsService.addMessage(this.chat, this.message).subscribe(result => {
+      this.chatsService.addMessage(this.chat.id, {content: this.message }).subscribe(result => {
         this.message = '';
         if(result) {
           this.chat = result;

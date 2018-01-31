@@ -5,7 +5,6 @@
       <a matLine>{{ chat.name }}</a>
       <button mat-raised-button [color]="'primary'" *ngIf="!chat.activated" (click)="join(chat)">Dołącz</button>
       <button mat-raised-button [color]="'primary'" *ngIf="chat.activated" (click)="resign(chat)">Zrezygnuj</button>
-      <!-- <button mat-raised-button [color]="'prim *ngIf="event.users.some(u => u.albumNumber === loggedUser.albumNumber)" (click)="resign(event)">Zrezygnuj</button> -->
     </mat-list-item>
   </mat-nav-list>
 </div>

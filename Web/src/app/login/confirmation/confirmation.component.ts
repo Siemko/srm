@@ -2,6 +2,7 @@ import { FormGroup, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material';
 import { FormControl } from '@angular/forms';
+import { LoginService } from '../login.service';
 
 @Component({
   selector: 'app-confirmation',
@@ -11,7 +12,8 @@ import { FormControl } from '@angular/forms';
 export class ConfirmationComponent implements OnInit {
 
   passwordRemindForm: FormGroup;
-  constructor(private dialogRef: MatDialogRef<ConfirmationComponent>) { }
+  constructor(private dialogRef: MatDialogRef<ConfirmationComponent>, 
+    private loginService: LoginService) { }
 
   ngOnInit() {
     this.initForm();
@@ -25,6 +27,8 @@ export class ConfirmationComponent implements OnInit {
 
   handlePasswordRemind() {
     console.log(this.passwordRemindForm);
+    this.loginService.remindPassword('')
+                      .subscribe(r => { this.dialogRef.close(); })
   }
 
 }

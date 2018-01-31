@@ -1,0 +1,17 @@
+<div class="add-event">
+  <div mat-dialog-title>Dodawanie wydarzenia</div>
+  <div mat-dialog-content>
+    <form [formGroup]="addEventForm">
+      <mat-form-field>
+        <input matInput placeholder="Nazwa" name="name" formControlName="name">
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Opis" name="description" formControlName="description" type="text">
+      </mat-form-field>
+    </form>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-raised-button [color]="'primary'" type="submit" (click)="addEvent()">Dodaj</button>
+    <button mat-raised-button [color]="'warn'" type="button" (click)="cancel()">Anuluj</button>
+  </div>
+</div>

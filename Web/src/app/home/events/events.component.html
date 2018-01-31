@@ -1,0 +1,12 @@
+<div class="students-list">
+  <button mat-raised-button [color]="'primary'" (click)="addEvent()">Dodaj wydarzenie</button>
+    <mat-nav-list>
+        <mat-list-item *ngFor="let event of events">
+           <a matLine href="...">{{ event.name }}</a>
+           <button mat-raised-button [color]="'primary'" *ngIf="!event.activated" (click)="activate(event)">Aktywuj</button>
+           <button mat-raised-button [color]="'primary'" *ngIf="event.activated" (click)="deactivate(event)">Deaktywuj</button>
+           <!-- <button mat-raised-button [color]="'primary'" *ngIf="!event.users.some(u => u.albumNumber === loggedUser.albumNumber)" (click)="join(event)">Dołącz</button>
+           <button mat-raised-button [color]="'primary'" *ngIf="event.users.some(u => u.albumNumber === loggedUser.albumNumber)" (click)="resign(event)">Zrezygnuj</button> -->
+        </mat-list-item>
+      </mat-nav-list>
+</div>

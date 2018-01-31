@@ -4,6 +4,7 @@ import { FormGroup, FormControl } from '@angular/forms';
 import { Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material';
 import { ConfirmationComponent } from './confirmation/confirmation.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -14,7 +15,7 @@ export class LoginComponent implements OnInit {
 
   loginForm: FormGroup;
 
-  constructor(private loginService: LoginService, private dialog: MatDialog) {
+  constructor(private router: Router, private loginService: LoginService, private dialog: MatDialog) {
     this.initializeForm();
   }
 
@@ -29,7 +30,13 @@ export class LoginComponent implements OnInit {
   }
 
   handleLogin() {
-    console.log(this.loginForm.value);
+    if(this.loginForm.valid) {
+      this.loginService.login(this.loginForm.value.login, this.loginForm.value.password).subscribe(result => {
+        if(result) {
+          this.router.navigate(['home']);
+        }
+      });
+    }
     // todo: service with login
   }
 

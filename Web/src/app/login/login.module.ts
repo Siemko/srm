@@ -1,3 +1,4 @@
+import { AppRoutingModule } from './../app-routing.module';
 import { LoginService } from './login.service';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -13,7 +14,8 @@ import { ConfirmationComponent } from './confirmation/confirmation.component';
     MatDialogModule,
     MatInputModule,
     MatButtonModule,
-    MatCardModule
+    MatCardModule,
+    AppRoutingModule
   ],
   declarations: [LoginComponent, ConfirmationComponent],
   providers: [

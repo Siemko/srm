@@ -1,3 +1,30 @@
-<p>
-  register works!
-</p>
+<form [formGroup]="registerForm">
+  <mat-card class="login-card">
+    <mat-card-header>
+      <mat-card-title>
+        <h1>Panel logowania</h1>
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="login-container">
+      <mat-form-field>
+        <input matInput placeholder="Email" name="email" formControlName="email">
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Confirm Email" name="confirmEmail" formControlName="confirmEmail" type="text">
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Password" name="password" formControlName="password" type="password">
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Name" name="name" formControlName="name" type="text">
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Surname" name="surname" formControlName="surname" type="text">
+      </mat-form-field>
+      
+    </mat-card-content>
+    <mat-card-actions class="login-button-container">
+      <button mat-button [color]="'primary'" type="submit" (click)="handleRegister()">REJESTRUJ!</button>
+    </mat-card-actions>
+  </mat-card>
+</form>

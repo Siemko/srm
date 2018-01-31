@@ -1,0 +1,9 @@
+<div class="students-list">
+    <mat-nav-list>
+        <mat-list-item *ngFor="let student of studentsList">
+           <a matLine href="...">{{ student.name + ' ' + student.surname }}</a>
+           <button mat-raised-button [color]="'warn'" (click)="banStudent(student)">Ban</button>
+           <button mat-raised-button [color]="'primary'" (click)="activateStudent(student)">Aktywuj</button>
+        </mat-list-item>
+      </mat-nav-list>
+</div>

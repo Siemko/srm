@@ -56,16 +56,16 @@ namespace SRM.Services
             return ExecuteAction<BaseContractResponse>(response =>
             {
                 var chat = _dbContext.Chats
-                                    .Include(c => c.Users)
+                                    .Include(c => c.ChatUsers)
                                     .FirstOrDefault(c => c.Id == chatId);
                 if (chat == null)
                     throw new ResourceNotFoundException("Chat not found.");
                 var user = GetCurrentUserClaims().User;
                 if (user == null)
                     throw new ResourceNotFoundException("User not found.");
-                if(chat.Users.Any(u => u.Id == user.Id))
+                if(chat.ChatUsers.Any(u => u.UserId == user.Id))
                     throw new DuplicateResourceException("User is already assigned to chat.");
-                chat.Users.Add(user);
+                chat.ChatUsers.Add(new ChatUser { ChatId = chatId, UserId = user.Id });
                 _dbContext.SaveChanges();
             });
         }
@@ -80,7 +80,6 @@ namespace SRM.Services
                 var chat = new Chat
                 {
                     Name = model.Name,
-                    Users = users.ToList()
                 };
                 _dbContext.Chats.Add(chat);
                 _dbContext.SaveChanges();
@@ -93,7 +92,8 @@ namespace SRM.Services
             return ExecuteAction<GetChatsResponse>(response =>
             {
                 response.Chats = _dbContext.Chats
-                                    .Include(c => c.Users)
+                                    .Include(c => c.ChatUsers)
+                                    .ThenInclude(c => c.User)
                                     .Select(c => new ChatModel(c)).ToList();
             });
         }
@@ -107,7 +107,7 @@ namespace SRM.Services
                     throw new ResourceNotFoundException("User not found.");
                 var chat = _dbContext.Chats
                                 .Include(c => c.Messages)
-                                .FirstOrDefault(c => c.Id == chatId && c.Users.Any(u => u.Id == user.Id));
+                                .FirstOrDefault(c => c.Id == chatId && c.ChatUsers.Any(u => u.UserId == user.Id));
                 if (chat == null)
                     throw new ResourceNotFoundException("Chat not found.");
                 response.Chat = new ChatModel(chat, chat.Messages);
@@ -122,11 +122,13 @@ namespace SRM.Services
                 if (user == null)
                     throw new ResourceNotFoundException("User not found.");
                 var chat = _dbContext.Chats
-                                    .Include(c => c.Users)
+                                    .Include(c => c.ChatUsers)
                                     .FirstOrDefault(c => c.Id == chatId);
                 if (chat == null)
                     throw new ResourceNotFoundException("Chat not found.");
-                chat.Users.Remove(user);
+                var chatUser = chat.ChatUsers.FirstOrDefault(cu => cu.UserId == user.Id);
+                if (chatUser == null)
+                    chat.ChatUsers.Remove(chatUser);
                 _dbContext.SaveChanges();
             });
         }

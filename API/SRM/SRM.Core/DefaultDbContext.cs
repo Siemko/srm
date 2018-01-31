@@ -29,6 +29,32 @@ namespace SRM.Core
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<EventUser>()
+                .HasKey(eu => new { eu.EventId, eu.UserId });
+
+            modelBuilder.Entity<EventUser>()
+                .HasOne(bc => bc.Event)
+                .WithMany(b => b.EventUsers)
+                .HasForeignKey(bc => bc.EventId);
+
+            modelBuilder.Entity<EventUser>()
+                .HasOne(bc => bc.User)
+                .WithMany(c => c.EventUsers)
+                .HasForeignKey(bc => bc.UserId);
+
+            modelBuilder.Entity<ChatUser>()
+                .HasKey(cu => new { cu.ChatId, cu.UserId });
+
+            modelBuilder.Entity<ChatUser>()
+                .HasOne(cu => cu.Chat)
+                .WithMany(cu => cu.ChatUsers)
+                .HasForeignKey(cu => cu.ChatId);
+
+            modelBuilder.Entity<ChatUser>()
+                .HasOne(cu => cu.User)
+                .WithMany(c => c.ChatUsers)
+                .HasForeignKey(bc => bc.UserId);
+
             base.OnModelCreating(modelBuilder);
         }
     }
@@ -38,7 +64,7 @@ namespace SRM.Core
         public DefaultDbContext CreateDbContext(string[] args)
         {
             var optionsBuilder = new DbContextOptionsBuilder<DefaultDbContext>()
-                .UseSqlServer("Data Source=DESKTOP-MJNMD1S;MultipleActiveResultSets=True;Initial Catalog=srm;Integrated Security=True");
+                .UseSqlServer("Data Source=DESKTOP-N6PC0RN\\SQLEXPRESS;MultipleActiveResultSets=True;Initial Catalog=srm;Integrated Security=True");
 
             return new DefaultDbContext(optionsBuilder.Options);
         }

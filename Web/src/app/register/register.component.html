@@ -11,6 +11,7 @@
         <mat-form-field>
           <input matInput placeholder="Email" name="email" formControlName="email">
           <span matSuffix><i class="fa fa-fw fa-envelope"></i></span>
+          <mat-error *ngIf="registerForm.controls.email.invalid">{{getErrorMessage(registerForm.controls.email)}}</mat-error>
         </mat-form-field>
         <mat-form-field>
           <input matInput placeholder="Confirm Email" name="confirmEmail" formControlName="confirmEmail" type="text">
@@ -19,14 +20,17 @@
         <mat-form-field>
           <input matInput placeholder="Password" name="password" formControlName="password" type="password">
           <span matSuffix><i class="fa fa-fw fa-lock"></i></span>
+          <mat-error *ngIf="registerForm.controls.password.invalid">{{getErrorMessage(registerForm.controls.password)}}</mat-error>
         </mat-form-field>
         <mat-form-field>
           <input matInput placeholder="Name" name="name" formControlName="name" type="text">
           <span matSuffix><i class="fa fa-fw fa-user"></i></span>
+          <mat-error *ngIf="registerForm.controls.name.invalid">{{getErrorMessage(registerForm.controls.name)}}</mat-error>
         </mat-form-field>
         <mat-form-field>
           <input matInput placeholder="Surname" name="surname" formControlName="surname" type="text">
           <span matSuffix><i class="fa fa-fw fa-user"></i></span>
+          <mat-error *ngIf="registerForm.controls.surname.invalid">{{getErrorMessage(registerForm.controls.surname)}}</mat-error>
         </mat-form-field>
         <div class="register-button-container">
           <button mat-raised-button [color]="'primary'" type="submit" (click)="handleRegister()">zarejestruj się</button>

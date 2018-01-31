@@ -21,12 +21,12 @@ namespace SRM.Services.Contracts.Chats.Models
         {
             Id = chat.Id;
             Name = chat.Name;
-            Users = chat.Users.Select(u => 
+            Users = chat.ChatUsers.Select(u => 
             {
                 return new UserModel
                 {
-                    Name = u.Name,
-                    Surname = u.Surname
+                    Name = u.User.Name,
+                    Surname = u.User.Surname
                 };
             }).ToList();
         }

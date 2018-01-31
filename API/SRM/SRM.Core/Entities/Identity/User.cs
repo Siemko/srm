@@ -31,5 +31,8 @@ namespace SRM.Core.Entities.Identity
         [ForeignKey("StudentGroup")]
         public int? StudentGroupId { get; set; }
         public StudentGroup StudentGroup { get; set; }
+
+        public ICollection<EventUser> EventUsers { get; set; }
+        public ICollection<ChatUser> ChatUsers { get; set; }
     }
 }

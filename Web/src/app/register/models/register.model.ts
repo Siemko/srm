@@ -1,6 +1,5 @@
-export interface RegisterDTO {
+export interface RegisterModel {
     email: string;
-    confirmEmail: string;
     password: string;
     name: string;
     surname: string;

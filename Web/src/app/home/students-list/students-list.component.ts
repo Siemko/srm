@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { StudentsListService } from './students-list.service';
+import { MatTableDataSource } from '@angular/material';
 
 @Component({
   selector: 'app-students-list',
@@ -8,8 +9,15 @@ import { StudentsListService } from './students-list.service';
 })
 export class StudentsListComponent implements OnInit {
   studentsList: any[];
+  displayedColumns = ['id', 'name', 'surname', 'studentNumber', 'action'];
 
-  constructor(private studentsListService: StudentsListService) { }
+  
+  dataSource = new MatTableDataSource<any>(this.studentsList);
+  loading: boolean = true;
+
+  constructor(private studentsListService: StudentsListService, private changeDetectorRefs: ChangeDetectorRef) {
+   }
+
 
   ngOnInit() {
     this.getStudentsList();
@@ -18,6 +26,10 @@ export class StudentsListComponent implements OnInit {
   getStudentsList() {
     this.studentsListService.getStudentsList().subscribe((result: any[]) => {
       this.studentsList = result;
+      this.dataSource = new MatTableDataSource<any>(this.studentsList);
+      this.changeDetectorRefs.detectChanges();
+      console.log(result);
+      
     });
   }
 

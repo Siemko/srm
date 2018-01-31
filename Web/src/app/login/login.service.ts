@@ -14,10 +14,6 @@ export class LoginService {
     return this.http.post("api/authentication/sign-in", model).map(res => res.json());
   }
 
-  register(model: RegisterModel): Observable<any> {
-    return this.http.post("api/authentication/sign-in", model).map(res => res.json());
-  }
-
   isLoggedIn() {
     const token = localStorage.getItem('token');
     return !(!token);

@@ -1,0 +1,27 @@
+.register-card {
+    width: 300px;
+    left: calc(50% - 150px);
+  
+    h1 {
+      font-size: 16px;
+      color: #5d5d5d;
+    }
+  }
+  
+  .register-container {
+    display: flex;
+    flex-direction: column;
+    & > * {
+      width: 100%;
+    }
+  }
+  
+  .register-button-container {
+    width: 100%;
+    margin-top: 20px;
+    button, a {
+      width: 100%;
+      margin-bottom: 5px;
+      text-transform: uppercase;
+    }
+  }

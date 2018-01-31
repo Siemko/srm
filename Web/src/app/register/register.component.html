@@ -1,30 +1,37 @@
-<form [formGroup]="registerForm">
-  <mat-card class="login-card">
-    <mat-card-header>
-      <mat-card-title>
-        <h1>Panel logowania</h1>
-      </mat-card-title>
-    </mat-card-header>
-    <mat-card-content class="login-container">
-      <mat-form-field>
-        <input matInput placeholder="Email" name="email" formControlName="email">
-      </mat-form-field>
-      <mat-form-field>
-        <input matInput placeholder="Confirm Email" name="confirmEmail" formControlName="confirmEmail" type="text">
-      </mat-form-field>
-      <mat-form-field>
-        <input matInput placeholder="Password" name="password" formControlName="password" type="password">
-      </mat-form-field>
-      <mat-form-field>
-        <input matInput placeholder="Name" name="name" formControlName="name" type="text">
-      </mat-form-field>
-      <mat-form-field>
-        <input matInput placeholder="Surname" name="surname" formControlName="surname" type="text">
-      </mat-form-field>
-      
-    </mat-card-content>
-    <mat-card-actions class="login-button-container">
-      <button mat-button [color]="'primary'" type="submit" (click)="handleRegister()">REJESTRUJ!</button>
-    </mat-card-actions>
-  </mat-card>
-</form>
+<div class="register">
+  <form [formGroup]="registerForm">
+    <mat-card class="register-card">
+      <mat-card-header>
+        <mat-card-title>
+          <h1>
+            <i class="fa fa-fw fa-user-circle"></i> Rejestracja</h1>
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content class="register-container">
+        <mat-form-field>
+          <input matInput placeholder="Email" name="email" formControlName="email">
+          <span matSuffix><i class="fa fa-fw fa-envelope"></i></span>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Confirm Email" name="confirmEmail" formControlName="confirmEmail" type="text">
+          <span matSuffix><i class="fa fa-fw fa-envelope"></i></span>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Password" name="password" formControlName="password" type="password">
+          <span matSuffix><i class="fa fa-fw fa-lock"></i></span>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Name" name="name" formControlName="name" type="text">
+          <span matSuffix><i class="fa fa-fw fa-user"></i></span>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Surname" name="surname" formControlName="surname" type="text">
+          <span matSuffix><i class="fa fa-fw fa-user"></i></span>
+        </mat-form-field>
+        <div class="register-button-container">
+          <button mat-raised-button [color]="'primary'" type="submit" (click)="handleRegister()">zarejestruj się</button>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </form>
+</div>

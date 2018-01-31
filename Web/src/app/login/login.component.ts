@@ -24,14 +24,14 @@ export class LoginComponent implements OnInit {
 
   initializeForm() {
     this.loginForm = new FormGroup({
-      login: new FormControl('', Validators.required),
+      email: new FormControl('', Validators.required),
       password: new FormControl('', Validators.required),
     });
   }
 
   handleLogin() {
     if(this.loginForm.valid) {
-      this.loginService.login(this.loginForm.value.login, this.loginForm.value.password).subscribe(result => {
+      this.loginService.login(this.loginForm.value.email, this.loginForm.value.password).subscribe(result => {
         if(result) {
           this.router.navigate(['home']);
         }

@@ -8,20 +8,18 @@
       </mat-card-header>
       <mat-card-content class="login-container">
         <mat-form-field>
-          <input matInput placeholder="Login" name="login" formControlName="login">
-          <span matSuffix><i class="fa fa-fw fa-user"></i></span>
-          <mat-error *ngIf="loginForm.controls.login.invalid">Wymagane pole</mat-error>
+          <input matInput placeholder="Email" name="email" formControlName="email">
+          <span matSuffix><i class="fa fa-fw fa-envelope"></i></span>
         </mat-form-field>
         <mat-form-field>
           <input matInput placeholder="Password" name="password" formControlName="password" type="password">
           <span matSuffix><i class="fa fa-fw fa-lock"></i></span>
-          <mat-error *ngIf="loginForm.controls.password.invalid">Wymagane pole</mat-error>
         </mat-form-field>
         <div class="login-button-container">
           <button mat-raised-button [color]="'primary'" type="submit" (click)="handleLogin()">zaloguj się</button>
           <hr/>
           <a mat-raised-button [color]="'accent'" routerLink="/register">Załóż nowe konto </a>
-          <button mat-button type="button" (click)="handlePasswordRemind()">Zapomnialeś hasła?</button>
+          <button mat-button type="button" (click)="handlePasswordRemind()" disabled>Zapomnialeś hasła?</button>
         </div>
       </mat-card-content>
     </mat-card>

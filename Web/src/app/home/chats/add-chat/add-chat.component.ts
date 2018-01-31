@@ -25,7 +25,7 @@ export class AddChatComponent implements OnInit {
 
   addChat() {
     if(this.addChatForm.valid) {
-      this.chatsService.addChat(this.addChatForm.value.name).subscribe(result => {
+      this.chatsService.addChat({ name: this.addChatForm.value.name, usersIds: []}).subscribe(result => {
         if(result) {
           this.dialogRef.close(result);
         }

@@ -67,16 +67,16 @@ namespace SRM.Services
                 if (!userClaim.IsStarosta && userId != userClaim.User.Id)
                     throw new CustomValidationException("This action is not allowed.");
                 var ev = _dbContext.Events
-                                    .Include(e => e.Users)
+                                    .Include(e => e.EventUsers)
                                     .FirstOrDefault(e => e.Id == eventId);
                 if (ev == null)
                     throw new ResourceNotFoundException("Event not found.");
                 var user = _dbContext.Users.FirstOrDefault(u => u.Id == userId);
                 if (user == null)
                     throw new ResourceNotFoundException("User not found.");
-                if (ev.Users.Any(u => u.Id == user.Id))
+                if (ev.EventUsers.Any(u => u.UserId == user.Id))
                     throw new DuplicateResourceException("User is currently assigned to event.");
-                ev.Users.Add(user);
+                ev.EventUsers.Add(new EventUser { UserId = userId, EventId = eventId });
                 _dbContext.SaveChanges();
             });
         }
@@ -127,14 +127,14 @@ namespace SRM.Services
                 if (!userClaim.IsStarosta && userId != userClaim.User.Id)
                     throw new CustomValidationException("This action is not allowed.");
                 var ev = _dbContext.Events
-                                    .Include(e => e.Users)
+                                    .Include(e => e.EventUsers)
                                     .FirstOrDefault(e => e.Id == eventId);
                 if (ev == null)
                     throw new ResourceNotFoundException("Event not found.");
-                var user = ev.Users.FirstOrDefault(u => u.Id == userId);
+                var user = ev.EventUsers.FirstOrDefault(u => u.User.Id == userId);
                 if (user == null)
                     throw new ResourceNotFoundException("User not found.");
-                ev.Users.Remove(user);
+                ev.EventUsers.Remove(user);
                 _dbContext.SaveChanges();
             });
         }

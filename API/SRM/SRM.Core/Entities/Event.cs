@@ -23,6 +23,6 @@ namespace SRM.Core.Entities
         public int CategoryId { get; set; }
         public EventCategory Category { get; set; }
 
-        public ICollection<User> Users { get; set; }
+        public ICollection<EventUser> EventUsers { get; set; }
     }
 }

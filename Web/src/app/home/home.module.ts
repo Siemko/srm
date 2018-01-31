@@ -16,6 +16,8 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { AddChatComponent } from './chats/add-chat/add-chat.component';
 import { SingleChatComponent } from './chats/single-chat/single-chat.component';
 import {MatSidenavModule} from '@angular/material/sidenav';
+import { ProfileComponent } from './profile/profile.component';
+import { ProfileService } from './profile/profile.service';
 
 @NgModule({
   imports: [
@@ -32,8 +34,9 @@ import {MatSidenavModule} from '@angular/material/sidenav';
     MatSidenavModule,
     MatTableModule
   ],
-  declarations: [HomeComponent, NavigationComponent, StudentsListComponent, EventsComponent, ChatsComponent, AddEventComponent, AddChatComponent, SingleChatComponent],
-  providers: [StudentsListService, EventsService, ChatsService],
+  declarations: [HomeComponent, NavigationComponent, StudentsListComponent, EventsComponent,
+     ChatsComponent, AddEventComponent, AddChatComponent, SingleChatComponent, ProfileComponent],
+  providers: [StudentsListService, EventsService, ChatsService, ProfileService],
   entryComponents: [AddEventComponent, AddChatComponent, SingleChatComponent]
 })
 export class HomeModule { }

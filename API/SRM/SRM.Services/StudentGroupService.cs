@@ -24,16 +24,11 @@ namespace SRM.Services
             : base(dbContext, logger, httpContextAccessor)
         { }
 
-        public BaseContractResponse Add(StudentGroupModel model)
+        public GetStudentGroupsResponse Get()
         {
-            return ExecuteAction<BaseContractResponse>((response) =>
+            return ExecuteAction<GetStudentGroupsResponse>((response) =>
             {
-                var studentGroup = new StudentGroup
-                {
-                    Name = model.Name
-                };
-                _dbContext.StudentGroups.Add(studentGroup);
-                _dbContext.SaveChanges();
+                response.StudentGroups = _dbContext.StudentGroups.Select(sg => new StudentGroupModel(sg)).ToList();
             });
         }
     }

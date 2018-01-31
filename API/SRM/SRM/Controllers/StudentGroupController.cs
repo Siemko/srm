@@ -16,39 +16,11 @@ namespace SRM.Controllers
         {
             _studentGroupService = studentGroupService;
         }
-        public StudentGroupController()
-        {
-        }
 
-        [HttpPost, Authorize(Roles = UserRole.Starosta)]
-        public ActionResult Create([FromBody]StudentGroupVM studentGroupViewModel)
+        [HttpGet]
+        public IActionResult Get()
         {
-            if (!ModelState.IsValid)
-                return RequestModelIsIncorrect();
-            var model = new StudentGroupModel
-            {
-                Name = studentGroupViewModel.Name
-            };
-            var response = _studentGroupService.Add(model);
-            if (!response.Success)
-                return CustomValidationError(response.ErrorMessage);
-            return Json(response);
-        }
-
-        [HttpPut, Authorize(Roles = UserRole.Starosta)]
-        public ActionResult Update([FromBody]StudentGroupVM studentGroupViewModel)
-        {
-            if (!ModelState.IsValid)
-                return RequestModelIsIncorrect();
-            //TODO
-            return Ok();
-        }
-
-        [HttpDelete, Route("{studentGroupId}"), Authorize(Roles = UserRole.Starosta)]
-        public ActionResult Delete(int studentGroupId)
-        {
-            //TODO
-            return Ok();
+            return GetResult(() => _studentGroupService.Get(), r => r.StudentGroups);
         }
     }
 }

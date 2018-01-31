@@ -17,13 +17,19 @@ namespace SRM.Controllers
             _eventService = eventService;
         }
 
-        [HttpGet]
+        [HttpGet, Authorize(UserRole.Starosta)]
         public IActionResult Get()
         {
             return GetResult(() => _eventService.GetEvents(), r => r.Events);
         }
 
-        [HttpPost, Authorize(Roles = UserRole.Starosta)]
+        [HttpGet, Route("categories")]
+        public IActionResult GetCategories()
+        {
+            return GetResult(() => _eventService.GetEventCategories(), r => r.EventCategories);
+        }
+
+        [HttpPost, Authorize(UserRole.Starosta)]
         public IActionResult Create([FromBody]EventVM eventViewModel)
         {
             var model = new EventModel
@@ -36,31 +42,31 @@ namespace SRM.Controllers
             return GetResult(() => _eventService.AddEvent(model), r => r);
         }
 
-        [HttpPut, Route("{eventId}/activate"), Authorize(Roles = UserRole.Starosta)]
+        [HttpPut, Route("{eventId}/activate"), Authorize(UserRole.Starosta)]
         public IActionResult ActivateEvent(int eventId)
         {
             return GetResult(() => _eventService.ActivateEvent(eventId), r => r);
         }
 
-        [HttpPut, Route("{eventId}/disable"), Authorize(Roles = UserRole.Starosta)]
+        [HttpPut, Route("{eventId}/disable"), Authorize(UserRole.Starosta)]
         public IActionResult DisableEvent(int eventId)
         {
             return GetResult(() => _eventService.DisableEvent(eventId), r => r);
         }
 
-        [HttpGet, Route("activated"), Authorize(Roles = UserRole.Starosta)]
+        [HttpGet, Route("activated")]
         public IActionResult GetActivatedEvents()
         {
             return GetResult(() => _eventService.GetActivatedEvents(), r => r.Events);
         }
 
-        [HttpGet, Route("{eventId}/assign")]
-        public IActionResult AssignToEvent(int eventId)
+        [HttpPut, Route("{eventId}/assign-user/{userId}")]
+        public IActionResult AssignToEvent(int eventId, int userId)
         {
-            return GetResult(() => _eventService.AssignToEvent(eventId), r => r);
+            return GetResult(() => _eventService.AssignToEvent(eventId, userId), r => r);
         }
 
-        [HttpGet, Route("{eventId}/remove-user/{userId}"), Authorize(Roles = UserRole.Starosta)]
+        [HttpPut, Route("{eventId}/remove-user/{userId}"), Authorize(Roles = UserRole.Starosta)]
         public IActionResult RemoveUserFromEvent(int eventId, int userId)
         {
             return GetResult(() => _eventService.RemoveUserFromEvent(eventId, userId), r => r);

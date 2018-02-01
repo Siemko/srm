@@ -26,14 +26,8 @@ export class EventsService {
     return this.http.post(`api/event`, model).map(res => res.json());
   }
 
-  getEventStudents() {
-    return new Observable(observer => {
-      observer.next([
-        {name: 'Daw'},
-        {name: 'Kuba'},
-        {name: 'Janek'}
-      ]);
-    });
+  getEventDetails(eventId) {
+    return this.http.get(`api/event/${eventId}`).map(res => res.json());
   }
 
   activate(event: any) {
@@ -52,5 +46,9 @@ export class EventsService {
 
   joinEvent(eventId: number, userId: number) {
     return this.http.put(`api/event/${eventId}/assign-user/${userId}`, {}).map(res => res.json());
+  }
+
+  getActiveEvents() {
+    return this.http.get(`api/event/activated`).map(res => res.json());
   }
 }

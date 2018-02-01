@@ -26,10 +26,8 @@ export class ProfileComponent implements OnInit {
 
   getUserProfile() {
     const userId = parseInt(localStorage.getItem(LocalStorageConst.USER_ID), 10);
-    console.log(userId);
     if (userId) {
       this.profileService.getProfile(userId).subscribe((result: any) => {
-        console.log(result);
         this.user = result;
         this.profileForm.setValue({
           name: result.name,

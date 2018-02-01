@@ -1,3 +1,4 @@
+import { EventsEntriesComponent } from './home/events-entries/events-entries.component';
 import { ProfileComponent } from './home/profile/profile.component';
 import { StudentsListComponent } from './home/students-list/students-list.component';
 import { HomeComponent } from './home/home.component';
@@ -18,7 +19,8 @@ const routes: Routes = [
       { path: 'studentslist', canActivate: [AuthGuard], component: StudentsListComponent},
       { path: 'events', component: EventsComponent},
       { path: 'chats', component: ChatsComponent},
-      { path: 'profile', component: ProfileComponent }
+      { path: 'profile', component: ProfileComponent },
+      { path: 'entries', component: EventsEntriesComponent },
     ]
   }
 ];

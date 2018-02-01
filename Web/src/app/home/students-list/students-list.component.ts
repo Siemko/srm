@@ -1,6 +1,8 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { StudentsListService } from './students-list.service';
 import { MatTableDataSource } from '@angular/material';
+import { LocalStorageConst } from '../../_consts/local-storage.const';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-students-list',
@@ -20,13 +22,19 @@ export class StudentsListComponent implements OnInit {
   dataSource = new MatTableDataSource<any>(this.studentsList);
   loading: boolean = true;
 
-  constructor(private studentsListService: StudentsListService, private changeDetectorRefs: ChangeDetectorRef) {
+  constructor(private studentsListService: StudentsListService,
+    private router: Router,
+     private changeDetectorRefs: ChangeDetectorRef) {
    }
 
 
   ngOnInit() {
     this.getStudetnsGroupsList();
     this.showActivated();
+
+    let role = localStorage.getItem(LocalStorageConst.ROLE_NAME).toLocaleLowerCase();
+    if(role != 'starosta')
+      this.router.navigate(['home/profile']);
   }
 
   refreshTable(users: any[]) {

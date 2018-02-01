@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { LoginService } from '../../login/login.service';
+import { LocalStorageConst } from '../../_consts/local-storage.const';
 
 @Component({
   selector: 'navigation',
@@ -8,9 +9,12 @@ import { LoginService } from '../../login/login.service';
 })
 export class NavigationComponent implements OnInit {
 
+  role: string;
+
   constructor(private loginService: LoginService) { }
 
   ngOnInit() {
+    this.role = localStorage.getItem(LocalStorageConst.ROLE_NAME).toLocaleLowerCase();
   }
 
   logout() {

@@ -3,6 +3,8 @@ import { EventsService } from './events.service';
 import { MatDialog, MatTableDataSource } from '@angular/material';
 import { AddEventComponent } from './add-event/add-event.component';
 import { EventDetailsComponent } from './event-details/event-details.component';
+import { LocalStorageConst } from '../../_consts/local-storage.const';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-events',
@@ -14,11 +16,14 @@ export class EventsComponent implements OnInit {
   joined = false;
   eventsCategories: any[] = [];
 
-  constructor(private eventsService: EventsService, private dialog: MatDialog) {
+  constructor(private eventsService: EventsService,private router: Router, private dialog: MatDialog) {
   }
 
   ngOnInit() {
     this.getEvents();
+    let role = localStorage.getItem(LocalStorageConst.ROLE_NAME).toLocaleLowerCase();
+    if(role != 'starosta')
+      this.router.navigate(['home/profile']);
   }
 
   getEvents() {

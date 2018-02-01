@@ -1,9 +1,8 @@
 <ul>
-    <li><a routerLink="studentslist" routerLinkActive="active-menu"><i class="fa fa-fw fa-users"></i> Studenci</a></li>
+    <li *ngIf="role == 'starosta'"><a routerLink="studentslist" routerLinkActive="active-menu"><i class="fa fa-fw fa-users"></i> Studenci</a></li>
     <li><a routerLink="entries" routerLinkActive="active-menu"><i class="fa fa-fw fa-list"></i> Zapisz się!</a></li>
-    <li><a routerLink="events" routerLinkActive="active-menu"><i class="fa fa-fw fa-list"></i> Zapisy</a></li>
-    <li><a routerLink="chats" routerLinkActive="active-menu"><i class="fa fa-fw fa-comments"></i> Czat</a></li>
+    <li *ngIf="role == 'starosta'"><a routerLink="events" routerLinkActive="active-menu"><i class="fa fa-fw fa-list"></i> Zapisy</a></li>
     <li><a routerLink="profile" routerLinkActive="active-menu"><i class="fa fa-fw fa-user"></i> Mój profil</a></li>
-    <li routerLinkActive="active-menu"><a (click)="logout()"><i class="fa fa-fw fa-sign-out"></i> Wyloguj</a></li>
+    <li routerLinkActive="active-menu"><a (click)="logout()" style="cursor:pointer;"><i class="fa fa-fw fa-sign-out"></i> Wyloguj</a></li>
   </ul>
   

@@ -12,16 +12,14 @@ export class EventDetailsComponent implements OnInit {
   event: any;
   students: any[] = [];
   activeStudents: any[] = [];
-  details: any;
 
   constructor(@Inject(MAT_DIALOG_DATA) data: any, private eventsService: EventsService, private studentsService: StudentsListService) {
-    if (data) {
-      this.event = data;
+    if(data) {
+      this.eventsService.getEvent(data.eventId).subscribe(e => this.event = e);
     }
   }
 
   ngOnInit() {
-    this.getDetails(this.event.id);
     this.getActiveStudents();
   }
 
@@ -31,19 +29,16 @@ export class EventDetailsComponent implements OnInit {
     });
   }
 
-  getDetails(eventID: number) {
-    this.eventsService.getEventDetails(eventID).subscribe((result: any) => {
-      this.details = result;
-      this.students = result.users;
+  addStudent(student: any) {
+    this.eventsService.joinEvent(this.event.id, student.id).subscribe((result: any) => {
+      this.event.users.push(student);
     });
   }
 
-  addStudent(student: any) {
-    this.eventsService.joinEvent(this.event.id, student.id).subscribe((result: any) => {
-      if (result) {
-        console.log(result);
-        this.getDetails(this.event.id);
-      }
+  deleteStudent(student: any) {
+    this.eventsService.removeUser(this.event.id, student.id).subscribe((result: any) => {
+      var index = this.event.users.indexOf(u => u.id == student.id);
+      this.event.users.splice(index, 1);
     });
   }
 }

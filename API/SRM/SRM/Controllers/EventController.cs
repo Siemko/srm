@@ -23,6 +23,12 @@ namespace SRM.Controllers
             return GetResult(() => _eventService.GetEvents(), r => r.Events);
         }
 
+        [HttpGet, Route("{eventId}")]
+        public IActionResult Get(int eventId)
+        {
+            return GetResult(() => _eventService.GetEvent(eventId), r => r.Event);
+        }
+
         [HttpGet, Route("categories")]
         public IActionResult GetCategories()
         {

@@ -20,6 +20,7 @@ import { SingleChatComponent } from './chats/single-chat/single-chat.component';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import { ProfileComponent } from './profile/profile.component';
 import { ProfileService } from './profile/profile.service';
+import { EventsEntriesComponent } from './events-entries/events-entries.component';
 
 @NgModule({
   imports: [
@@ -41,7 +42,7 @@ import { ProfileService } from './profile/profile.service';
     MatChipsModule
   ],
   declarations: [HomeComponent, NavigationComponent, StudentsListComponent, EventsComponent,
-     ChatsComponent, AddEventComponent, AddChatComponent, SingleChatComponent, ProfileComponent, EventDetailsComponent],
+     ChatsComponent, AddEventComponent, AddChatComponent, SingleChatComponent, ProfileComponent, EventDetailsComponent, EventsEntriesComponent],
   providers: [StudentsListService, EventsService, ChatsService, ProfileService],
   entryComponents: [AddEventComponent, AddChatComponent, SingleChatComponent, EventDetailsComponent]
 })

@@ -31,6 +31,7 @@ namespace SRM.Services.Contracts.Accounts
         public int? MaxNumberOfPerson { get; set; }
         public string Description { get; set; }
         public bool Activated { get; set; }
+        public int Id { get; set; }
         public ICollection<UserModel> Users { get; set; }
     }
 }

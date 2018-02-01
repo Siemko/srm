@@ -20,6 +20,7 @@ export class EventDetailsComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.getStudents();
     this.getActiveStudents();
   }
 

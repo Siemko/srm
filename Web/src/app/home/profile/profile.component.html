@@ -1,3 +1,27 @@
-<p>
-  profile works!
-</p>
+<div class="profile">
+  <form [formGroup]="profileForm">
+    <mat-form-field>
+      <input matInput placeholder="Email" name="email" formControlName="email">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="Imię" name="name" formControlName="name">
+    </mat-form-field>
+    <mat-form-field>
+        <input matInput placeholder="Nazwisko" name="surname" formControlName="surname">
+      </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="Opis" name="description" formControlName="description">
+    </mat-form-field>
+    <mat-form-field>
+        <input matInput placeholder="Numer albumu" name="studentNumber" formControlName="studentNumber">
+      </mat-form-field>
+    <mat-form-field>
+        <mat-select placeholder="Grupa" name="studentGroupId" formControlName="studentGroupId">
+          <mat-option *ngFor="let studentGroup of studentsGroups" [value]="studentGroup.id">
+            {{studentGroup.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <button mat-raised-button [color]="'primary'" type="submit" (click)="editStudent()">Edytuj</button>
+  </form>
+</div>

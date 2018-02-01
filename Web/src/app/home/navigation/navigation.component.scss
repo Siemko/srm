@@ -5,6 +5,10 @@ ul {
     font-size: 1.0em;
     font-family: Roboto,"Helvetica Neue",sans-serif;
 
+    li a.active-menu {
+        color: #673ab7;
+    }
+
     li a {
         display: block;
         padding: 10px 20px;

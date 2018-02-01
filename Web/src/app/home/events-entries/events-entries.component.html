@@ -1,9 +1,12 @@
 <div class="events-entries">
       <mat-nav-list>
           <mat-list-item *ngFor="let event of events">
-             <a matLine (click)="openDetails(event)">{{ event.name }}</a>
-             <button mat-raised-button [color]="'primary'" (click)="join(event)">Dołącz</button>
-             <button mat-raised-button [color]="'primary'" (click)="resign(event)">Zrezygnuj</button>
+             <div matLine>
+               <b>{{ event.name }}</b>
+               <p>Maksymalna liczba osób: {{event.maxNumberOfPerson}} Opis: {{event.description}}</p>
+             </div>
+             <button mat-raised-button [color]="'primary'" (click)="join(event.id)">Dołącz</button>
+             <button mat-raised-button [color]="'primary'" (click)="resign(event.id)">Zrezygnuj</button>
           </mat-list-item>
         </mat-nav-list>
   </div>

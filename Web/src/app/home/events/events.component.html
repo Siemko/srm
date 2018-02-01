@@ -5,9 +5,9 @@
   <mat-nav-list>
     <mat-list-item *ngFor="let event of events">
       <a matLine (click)="openDetails(event)">{{ event.name }}</a>
-      <button mat-raised-button (click)="openDetails(event)">Szczegóły</button>
-      <button mat-raised-button [color]="'primary'" *ngIf="!event.activated" (click)="activate(event)">Aktywuj</button>
-      <button mat-raised-button [color]="'primary'" *ngIf="event.activated" (click)="deactivate(event)">Deaktywuj</button>
+      <button class="margin-right-5" mat-raised-button (click)="openDetails(event)">Szczegóły</button>
+      <button class="margin-right-5" mat-raised-button [color]="'primary'" *ngIf="!event.activated" (click)="activate(event)">Aktywuj</button>
+      <button class="margin-right-5" mat-raised-button [color]="'warn'" *ngIf="event.activated" (click)="deactivate(event)">Deaktywuj</button>
     </mat-list-item>
   </mat-nav-list>
 </div>

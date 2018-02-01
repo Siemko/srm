@@ -16,6 +16,10 @@ export class EventsService {
     return this.http.get(`api/event/categories`).map(res => res.json());
   }
 
+  getActiveEvents() {
+    return this.http.get(`api/event/activated`).map(res => res.json());
+  }
+
   addEvent(name: string, description: string, category: number, max: number) {
     const model: AddEventDTO = {
       name: name,

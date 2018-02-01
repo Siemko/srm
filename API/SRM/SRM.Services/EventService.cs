@@ -97,7 +97,23 @@ namespace SRM.Services
         {
             return ExecuteAction<GetEventsResponse>((response) =>
             {
-                response.Events = _dbContext.Events.Where(e => e.Activated).Select(e => new EventModel(e)).ToList();
+                response.Events = _dbContext.Events
+                                   .Include(e => e.Category)
+                                   .Where(e => e.Activated).Select(e => new EventModel(e, false)).ToList();
+            });
+        }
+
+        public GetEventResponse GetEvent(int eventId)
+        {
+            return ExecuteAction<GetEventResponse>((response) =>
+            {
+                var ev = _dbContext.Events
+                                   .Include(e => e.Category)
+                                   .Include(e => e.EventUsers).ThenInclude(eu=> eu.User)
+                                   .FirstOrDefault(e => e.Id == eventId);
+                if (ev == null)
+                    throw new ResourceNotFoundException("Event not found.");
+                response.Event = new EventModel(ev, true);
             });
         }
 
@@ -113,7 +129,7 @@ namespace SRM.Services
         {
             return ExecuteAction<GetEventsResponse>((response) =>
             {
-                response.Events = _dbContext.Events.Select(e => new EventModel(e)).ToList();
+                response.Events = _dbContext.Events.Select(e => new EventModel(e, false)).ToList();
             });
         }
 
@@ -127,7 +143,7 @@ namespace SRM.Services
                 if (!userClaim.IsStarosta && userId != userClaim.User.Id)
                     throw new CustomValidationException("This action is not allowed.");
                 var ev = _dbContext.Events
-                                    .Include(e => e.EventUsers)
+                                    .Include(e => e.EventUsers).ThenInclude(eu => eu.User)
                                     .FirstOrDefault(e => e.Id == eventId);
                 if (ev == null)
                     throw new ResourceNotFoundException("Event not found.");

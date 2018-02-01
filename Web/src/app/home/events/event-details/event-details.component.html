@@ -1,9 +1,13 @@
 <div class="event-details">
     <div mat-dialog-title>Szczegóły wydarzenia</div>
+    <p><span class="text-bold">Nazwa:</span> {{event.name}}</p>
+    <p><span class="text-bold">Kategoria:</span> {{event.categoryName}}</p>
+    <p><span class="text-bold">Opis:</span> {{event.description}}</p>
+    <h4>Zapisani:</h4>
     <div mat-dialog-content>
         <mat-nav-list>
-            <mat-list-item *ngFor="let student of students">
-               <a matLine>{{ student.name }}</a>
+            <mat-list-item *ngFor="let student of event.users">
+               <a matLine>{{ student.name }} {{ student.surname }}</a>
                <button mat-raised-button [color]="'warn'" (click)="deleteStudent(student)">Usuń</button>
             </mat-list-item>
           </mat-nav-list>

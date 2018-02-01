@@ -14,13 +14,12 @@ export class EventDetailsComponent implements OnInit {
   activeStudents: any[] = [];
 
   constructor(@Inject(MAT_DIALOG_DATA) data: any, private eventsService: EventsService, private studentsService: StudentsListService) {
-    if (data) {
-      this.event = data;
+    if(data) {
+      this.eventsService.getEvent(data.eventId).subscribe(e => this.event = e);
     }
   }
 
   ngOnInit() {
-    this.getStudents();
     this.getActiveStudents();
   }
 
@@ -30,18 +29,16 @@ export class EventDetailsComponent implements OnInit {
     });
   }
 
-  getStudents() {
-    this.eventsService.getEventStudents().subscribe((result: any[]) => {
-      this.students = result;
+  addStudent(student: any) {
+    this.eventsService.joinEvent(this.event.id, student.id).subscribe((result: any) => {
+      this.event.users.push(student);
     });
   }
 
-  addStudent(student: any) {
-    this.eventsService.joinEvent(this.event.id, student.id).subscribe((result: any) => {
-      if (result) {
-        console.log(result);
-        this.getStudents();
-      }
+  deleteStudent(student: any) {
+    this.eventsService.removeUser(this.event.id, student.id).subscribe((result: any) => {
+      var index = this.event.users.indexOf(u => u.id == student.id);
+      this.event.users.splice(index, 1);
     });
   }
 }

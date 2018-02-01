@@ -13,5 +13,6 @@ namespace SRM.Services.Interfaces
         BaseContractResponse AssignToEvent(int eventId, int userId);
         BaseContractResponse RemoveUserFromEvent(int eventId, int userId);
         GetEventCategoriesResponse GetEventCategories();
+        GetEventResponse GetEvent(int eventId);
     }
 }

@@ -4,9 +4,10 @@
       <mat-chip [selected]="selectedActivated" (click)="showActivated()">Studenci aktywowani</mat-chip>
       <mat-chip [selected]="selectedDectivated" (click)="showDeactivated()">Studenci zbanowani</mat-chip>
       <mat-chip [selected]="selectedStudentGroup" [matMenuTriggerFor]="menu">Grupy dziekańskie</mat-chip>
+      <mat-chip [selected]="selectedAll" (click)="showAll()">Wszyscy</mat-chip>
     </mat-chip-list>
     <mat-menu #menu="matMenu">
-      <button (click)="showStudentGroup()" mat-menu-item *ngFor="let studentGroup of studentsGroupsList">{{ studentGroup.name }}</button>
+      <button (click)="showStudentGroup(studentGroup.id)" mat-menu-item *ngFor="let studentGroup of studentsGroupsList">{{ studentGroup.name }}</button>
     </mat-menu>
   </mat-toolbar>
   <div class="example-container mat-elevation-z8">
@@ -35,8 +36,8 @@
       <ng-container matColumnDef="action">
         <mat-header-cell *matHeaderCellDef> Akcja: </mat-header-cell>
         <mat-cell *matCellDef="let student">
-          <button mat-raised-button [color]="'warn'" (click)="banStudent(student)">Ban</button>
-          <button mat-raised-button [color]="'primary'" (click)="activateStudent(student)">Aktywuj</button>
+          <button *ngIf="student.active" mat-raised-button [color]="'warn'" (click)="banStudent(student)">Ban</button>
+          <button *ngIf="!student.active" mat-raised-button [color]="'primary'" (click)="activateStudent(student)">Aktywuj</button>
         </mat-cell>
       </ng-container>
 

@@ -12,6 +12,7 @@ namespace SRM.Services.Contracts.Users
         public string StudentNumber { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }
+        public bool Active { get; set; }
 
         public UserModel() { }
 
@@ -24,6 +25,7 @@ namespace SRM.Services.Contracts.Users
             StudentGroupId = user.StudentGroupId;
             Name = user.Name;
             Surname = user.Surname;
+            Active = user.Active;
 
             if (user.Role != null)
                 RoleName = user.Role.Name;

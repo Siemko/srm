@@ -15,6 +15,7 @@ export class StudentsListComponent implements OnInit {
   selectedActivated: boolean;
   selectedDectivated: boolean;
   selectedStudentGroup: boolean;
+  selectedAll: boolean;
 
   dataSource = new MatTableDataSource<any>(this.studentsList);
   loading: boolean = true;
@@ -42,18 +43,21 @@ export class StudentsListComponent implements OnInit {
 
   banStudent(student) {
     this.studentsListService.banStudent(student.id).subscribe(result => {
-
+      student.active = false;
     });
   }
 
   activateStudent(student) {
     this.studentsListService.activateStudent(student.id).subscribe(result => {
-      
+      student.active = true;
     });
   }
 
   showActivated() {
     this.selectedActivated = true;
+    this.selectedDectivated = false;
+    this.selectedStudentGroup = false;
+    this.selectedAll = false;
     this.studentsListService.getActivatedStudents().subscribe((result: any[]) => {
       this.refreshTable(result);
     });
@@ -61,14 +65,30 @@ export class StudentsListComponent implements OnInit {
 
   showDeactivated() {
     this.selectedDectivated = true;
+    this.selectedActivated = false;
+    this.selectedStudentGroup = false;
+    this.selectedAll = false;
     this.studentsListService.getDeactivatedStudents().subscribe((result: any[]) => {
       this.refreshTable(result);
     });
   }
 
-  showStudentGroup() {
+  showStudentGroup(studentGroupId:number) {
     this.selectedStudentGroup = true;
-    this.studentsListService.getStudentsByStudentGroup().subscribe((result: any[]) => {
+    this.selectedActivated = false;
+    this.selectedActivated = false;
+    this.selectedAll = false;
+    this.studentsListService.getStudentsByStudentGroup(studentGroupId).subscribe((result: any[]) => {
+      this.refreshTable(result);
+    });
+  }
+
+  showAll() {
+    this.selectedAll = true;
+    this.selectedStudentGroup = false;
+    this.selectedActivated = false;
+    this.selectedActivated = false;
+    this.studentsListService.getStudentsList().subscribe((result: any[]) => {
       this.refreshTable(result);
     });
   }

@@ -16,8 +16,8 @@ export class LoginService {
     return this.http.post("api/authentication/sign-in", model).map(res => res.json());
   }
 
-  remindPassword(email: string): Observable<LoginResponseModel> {
-    return this.http.post("api/authentication/remind-password", email).map(res => res.json());
+  remindPassword(model: any): Observable<LoginResponseModel> {
+    return this.http.post("api/authentication/remind-password", model).map(res => res.json());
   }
 
   isLoggedIn() {

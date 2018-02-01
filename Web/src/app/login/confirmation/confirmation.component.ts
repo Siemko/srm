@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material';
 import { FormControl } from '@angular/forms';
 import { LoginService } from '../login.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-confirmation',
@@ -13,7 +14,8 @@ export class ConfirmationComponent implements OnInit {
 
   passwordRemindForm: FormGroup;
   constructor(private dialogRef: MatDialogRef<ConfirmationComponent>, 
-    private loginService: LoginService) { }
+    private loginService: LoginService,
+    private toastr: ToastrService) { }
 
   ngOnInit() {
     this.initForm();
@@ -27,8 +29,11 @@ export class ConfirmationComponent implements OnInit {
 
   handlePasswordRemind() {
     console.log(this.passwordRemindForm);
-    this.loginService.remindPassword('')
-                      .subscribe(r => { this.dialogRef.close(); })
+    this.loginService.remindPassword({email: this.passwordRemindForm.value.email})
+                      .subscribe(r => { 
+                        this.toastr.success(`Email z instrukcjami resetu hasła został wysłay.`);
+                        this.dialogRef.close(); 
+                      })
   }
 
 }

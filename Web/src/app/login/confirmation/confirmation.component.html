@@ -4,12 +4,11 @@
       <mat-form-field>
         <input matInput placeholder="Email" name="email" formControlName="email">
         <span matSuffix><i class="fa fa-fw fa-envelope"></i></span>
-        <mat-error *ngIf="passwordRemindForm.controls.email.errors.email">Nieprawidłowy adres email</mat-error>
-        <mat-error *ngIf="passwordRemindForm.controls.email.errors.required">To pole jest wymagane</mat-error>
       </mat-form-field>
     </mat-card-content>
     <mat-card-actions class="remind-button-container">
-      <button mat-button [color]="'primary'" type="button" (click)="handlePasswordRemind()"><i class="fa fa-fw fa-bell"></i> Przypomnij hasło!</button>
+      <button mat-button [color]="'primary'" type="submit" (click)="handlePasswordRemind()">
+        <i class="fa fa-fw fa-bell"></i> Przypomnij hasło!</button>
     </mat-card-actions>
   </mat-card>
 </form>

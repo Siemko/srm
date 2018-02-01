@@ -50,9 +50,11 @@ namespace SRM.Controllers
         }
 
         [HttpPost, Route("remind-password")]
-        public ActionResult RemindPassword([FromBody]string email)
+        public ActionResult RemindPassword([FromBody]RemindPasswordVM model)
         {
-            var response = _emailService.SendResetToken(email);
+            if (!ModelState.IsValid)
+                return RequestModelIsIncorrect();
+            var response = _emailService.SendResetToken(model.Email);
             if (!response.Success)
                 return CustomValidationError(response.ErrorMessage);
             return Json(response);

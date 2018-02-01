@@ -21,6 +21,7 @@ import {MatSidenavModule} from '@angular/material/sidenav';
 import { ProfileComponent } from './profile/profile.component';
 import { ProfileService } from './profile/profile.service';
 import { EventsEntriesComponent } from './events-entries/events-entries.component';
+import { RoleGuard } from '../_guards/role.guard';
 
 @NgModule({
   imports: [
@@ -43,7 +44,7 @@ import { EventsEntriesComponent } from './events-entries/events-entries.componen
   ],
   declarations: [HomeComponent, NavigationComponent, StudentsListComponent, EventsComponent,
      ChatsComponent, AddEventComponent, AddChatComponent, SingleChatComponent, ProfileComponent, EventDetailsComponent, EventsEntriesComponent],
-  providers: [StudentsListService, EventsService, ChatsService, ProfileService],
+  providers: [StudentsListService, EventsService, ChatsService, ProfileService, RoleGuard],
   entryComponents: [AddEventComponent, AddChatComponent, SingleChatComponent, EventDetailsComponent]
 })
 export class HomeModule { }

@@ -1,3 +1,4 @@
+import { ProfileComponent } from './home/profile/profile.component';
 import { StudentsListComponent } from './home/students-list/students-list.component';
 import { HomeComponent } from './home/home.component';
 import { RegisterComponent } from './register/register.component';
@@ -16,7 +17,8 @@ const routes: Routes = [
   { path: 'home', canActivate: [AuthGuard],  component: HomeComponent, children: [
       { path: 'studentslist', canActivate: [AuthGuard], component: StudentsListComponent},
       { path: 'events', component: EventsComponent},
-      { path: 'chats', component: ChatsComponent}
+      { path: 'chats', component: ChatsComponent},
+      { path: 'profile', component: ProfileComponent }
     ]
   }
 ];

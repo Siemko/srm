@@ -12,6 +12,10 @@ export class StudentsListComponent implements OnInit {
   displayedColumns = ['id', 'name', 'surname', 'studentNumber', 'action'];
   studentsGroupsList: any[];
 
+  selectedActivated: boolean;
+  selectedDectivated: boolean;
+  selectedStudentGroup: boolean;
+
   dataSource = new MatTableDataSource<any>(this.studentsList);
   loading: boolean = true;
 
@@ -21,16 +25,13 @@ export class StudentsListComponent implements OnInit {
 
   ngOnInit() {
     this.getStudetnsGroupsList();
-    this.getStudentsList();
+    this.showActivated();
   }
 
-  getStudentsList() {
-    this.studentsListService.getStudentsList().subscribe((result: any[]) => {
-      console.log(result)
-      this.studentsList = result;
-      this.dataSource = new MatTableDataSource<any>(this.studentsList);
-      this.changeDetectorRefs.detectChanges();
-    });
+  refreshTable(users: any[]) {
+    this.studentsList = users;
+    this.dataSource = new MatTableDataSource<any>(this.studentsList);
+    this.changeDetectorRefs.detectChanges();
   }
 
   getStudetnsGroupsList() {
@@ -51,4 +52,24 @@ export class StudentsListComponent implements OnInit {
     });
   }
 
+  showActivated() {
+    this.selectedActivated = true;
+    this.studentsListService.getActivatedStudents().subscribe((result: any[]) => {
+      this.refreshTable(result);
+    });
+  }
+
+  showDeactivated() {
+    this.selectedDectivated = true;
+    this.studentsListService.getDeactivatedStudents().subscribe((result: any[]) => {
+      this.refreshTable(result);
+    });
+  }
+
+  showStudentGroup() {
+    this.selectedStudentGroup = true;
+    this.studentsListService.getStudentsByStudentGroup().subscribe((result: any[]) => {
+      this.refreshTable(result);
+    });
+  }
 }

@@ -10,5 +10,8 @@ namespace SRM.Services.Interfaces
         BaseContractResponse Deactivate(int userId);
         GetUserResponse GetUser(int userId);
         BaseContractResponse UpdateUser(UserModel model);
+        GetUsersResponse GetActivatedUsers();
+        GetUsersResponse GetDeactivatedUsers();
+        GetUsersResponse GetUsersByStudentGroup(int studentGroupId);
     }
 }

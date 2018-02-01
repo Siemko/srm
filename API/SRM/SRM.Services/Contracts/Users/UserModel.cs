@@ -22,8 +22,8 @@ namespace SRM.Services.Contracts.Users
             Description = user.Description;
             StudentNumber = user.StudentNumber;
             StudentGroupId = user.StudentGroupId;
-            StudentNumber = user.Name;
-            StudentNumber = user.Surname;
+            Name = user.Name;
+            Surname = user.Surname;
 
             if (user.Role != null)
                 RoleName = user.Role.Name;

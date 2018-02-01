@@ -89,5 +89,38 @@ namespace SRM.Services
                 _dbContext.SaveChanges();
             });
         }
+
+        public GetUsersResponse GetActivatedUsers()
+        {
+            return ExecuteAction<GetUsersResponse>((response) =>
+            {
+                response.Users = _dbContext.Users.Where(u => u.Active)
+                                           .Include(u => u.Role)
+                                           .Include(u => u.StudentGroup)
+                                           .Select(u => new UserModel(u)).ToList();
+            });
+        }
+
+        public GetUsersResponse GetDeactivatedUsers()
+        {
+            return ExecuteAction<GetUsersResponse>((response) =>
+            {
+                response.Users = _dbContext.Users.Where(u => !u.Active)
+                                           .Include(u => u.Role)
+                                           .Include(u => u.StudentGroup)
+                                           .Select(u => new UserModel(u)).ToList();
+            });
+        }
+
+        public GetUsersResponse GetUsersByStudentGroup(int studentGroupId)
+        {
+            return ExecuteAction<GetUsersResponse>((response) =>
+            {
+                response.Users = _dbContext.Users.Where(u => u.StudentGroupId == studentGroupId)
+                                           .Include(u => u.Role)
+                                           .Include(u => u.StudentGroup)
+                                           .Select(u => new UserModel(u)).ToList();
+            });
+        }
     }
 }

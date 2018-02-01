@@ -1,46 +1,47 @@
 <div class="students-list">
+  <mat-toolbar>
+    <mat-chip-list>
+      <mat-chip [selected]="selectedActivated" (click)="showActivated()">Studenci aktywowani</mat-chip>
+      <mat-chip [selected]="selectedDectivated" (click)="showDeactivated()">Studenci zbanowani</mat-chip>
+      <mat-chip [selected]="selectedStudentGroup" [matMenuTriggerFor]="menu">Grupy dziekańskie</mat-chip>
+    </mat-chip-list>
+    <mat-menu #menu="matMenu">
+      <button (click)="showStudentGroup()" mat-menu-item *ngFor="let studentGroup of studentsGroupsList">{{ studentGroup.name }}</button>
+    </mat-menu>
+  </mat-toolbar>
+  <div class="example-container mat-elevation-z8">
+    <mat-table #table [dataSource]="dataSource">
 
-      <div class="students-groups-list">
-          <mat-nav-list>
-              <mat-list-item *ngFor="let studentGroup of studentsGroupsList">
-                 <a matLine>{{ studentGroup.name }}</a>
-              </mat-list-item>
-            </mat-nav-list>
-      </div>
+      <ng-container matColumnDef="id">
+        <mat-header-cell *matHeaderCellDef> Id: </mat-header-cell>
+        <mat-cell *matCellDef="let student"> {{student.id}} </mat-cell>
+      </ng-container>
 
-      <div class="example-container mat-elevation-z8">
-        <mat-table #table [dataSource]="dataSource">
+      <ng-container matColumnDef="name">
+        <mat-header-cell *matHeaderCellDef> Imię: </mat-header-cell>
+        <mat-cell *matCellDef="let student"> {{student.name}} </mat-cell>
+      </ng-container>
 
-          <ng-container matColumnDef="id">
-            <mat-header-cell *matHeaderCellDef> Id: </mat-header-cell>
-            <mat-cell *matCellDef="let student"> {{student.id}} </mat-cell>
-          </ng-container>
+      <ng-container matColumnDef="surname">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Nazwisko: </mat-header-cell>
+        <mat-cell *matCellDef="let student"> {{student.surname}} </mat-cell>
+      </ng-container>
 
-          <ng-container matColumnDef="name">
-            <mat-header-cell *matHeaderCellDef > Imię: </mat-header-cell>
-            <mat-cell *matCellDef="let student"> {{student.name}} </mat-cell>
-          </ng-container>
+      <ng-container matColumnDef="studentNumber">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Nr albumu: </mat-header-cell>
+        <mat-cell *matCellDef="let student"> {{student.studentNumber}} </mat-cell>
+      </ng-container>
 
-          <ng-container matColumnDef="surname">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> Nazwisko: </mat-header-cell>
-            <mat-cell *matCellDef="let student"> {{student.surname}} </mat-cell>
-          </ng-container>
-      
-          <ng-container matColumnDef="studentNumber">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> Nr albumu: </mat-header-cell>
-            <mat-cell *matCellDef="let student"> {{student.studentNumber}} </mat-cell>
-          </ng-container>
+      <ng-container matColumnDef="action">
+        <mat-header-cell *matHeaderCellDef> Akcja: </mat-header-cell>
+        <mat-cell *matCellDef="let student">
+          <button mat-raised-button [color]="'warn'" (click)="banStudent(student)">Ban</button>
+          <button mat-raised-button [color]="'primary'" (click)="activateStudent(student)">Aktywuj</button>
+        </mat-cell>
+      </ng-container>
 
-          <ng-container matColumnDef="action">
-            <mat-header-cell *matHeaderCellDef> Akcja: </mat-header-cell>
-            <mat-cell *matCellDef="let student"> 
-                    <button mat-raised-button [color]="'warn'" (click)="banStudent(student)">Ban</button>
-                    <button mat-raised-button [color]="'primary'" (click)="activateStudent(student)">Aktywuj</button>
-            </mat-cell>
-          </ng-container>
-      
-          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-          <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-        </mat-table>
-      </div>
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+  </div>
 </div>

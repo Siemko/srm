@@ -15,19 +15,34 @@ namespace SRM.Controllers
             _userService = userService;
         }
 
-        [HttpGet("{userId}")]
+        [HttpGet, Route("{userId}")]
         public IActionResult Get(int userId)
         {
             return GetResult(() => _userService.GetUser(userId), r => r.User);
         }
 
         [HttpGet, Authorize(UserRole.Starosta)]
-        public ActionResult GetUsers()
+        public IActionResult GetUsers()
         {
-            var response = _userService.GetUsers();
-            if (!response.Success)
-                return CustomValidationError(response.ErrorMessage);
-            return Json(response.Users);
+            return GetResult(() => _userService.GetUsers(), r => r.Users);
+        }
+
+        [HttpGet, Route("activated"), Authorize(UserRole.Starosta)]
+        public IActionResult GetActivatedUsers()
+        {
+            return GetResult(() => _userService.GetActivatedUsers(), r => r.Users);
+        }
+
+        [HttpGet, Route("deactivated"), Authorize(UserRole.Starosta)]
+        public IActionResult GetDeactivatedUsers()
+        {
+            return GetResult(() => _userService.GetDeactivatedUsers(), r => r.Users);
+        }
+
+        [HttpGet, Route("student-group/{studentGroupId}"), Authorize(UserRole.Starosta)]
+        public IActionResult GetUsersByStudentGroup(int studentGroupId)
+        {
+            return GetResult(() => _userService.GetUsersByStudentGroup(studentGroupId), r => r.Users);
         }
 
         [HttpPut]

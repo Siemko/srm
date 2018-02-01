@@ -22,4 +22,16 @@ export class StudentsListService {
   getStudentsGroupsList(): Observable<any> {
     return this.http.get(`api/studentgroup`).map(res => res.json());
   }
+
+  getActivatedStudents(): Observable<any> {
+    return this.http.get("api/user/activated").map(res => res.json());
+  }
+
+  getDeactivatedStudents(): Observable<any> {
+    return this.http.get("api/user/deactivated").map(res => res.json());
+  }
+
+  getStudentsByStudentGroup(studentGroupId: number): Observable<any> {
+    return this.http.get(`api/user/student-group/${studentGroupId}`).map(res => res.json());
+  }
 }

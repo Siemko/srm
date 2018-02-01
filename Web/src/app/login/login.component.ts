@@ -35,7 +35,7 @@ export class LoginComponent implements OnInit {
         console.log(result);
         if (result.token) {
           this.loginService.saveLoginModel(result);
-          this.router.navigate(['/home']);
+          this.router.navigate(['/home/studentslist']);
         }
       });
     }

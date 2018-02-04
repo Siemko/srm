@@ -14,7 +14,7 @@ export class EventDetailsComponent implements OnInit {
   activeStudents: any[] = [];
 
   constructor(@Inject(MAT_DIALOG_DATA) data: any, private eventsService: EventsService, private studentsService: StudentsListService) {
-    if(data) {
+    if (data) {
       this.eventsService.getEvent(data.eventId).subscribe(e => this.event = e);
     }
   }
@@ -37,7 +37,7 @@ export class EventDetailsComponent implements OnInit {
 
   deleteStudent(student: any) {
     this.eventsService.removeUser(this.event.id, student.id).subscribe((result: any) => {
-      var index = this.event.users.indexOf(u => u.id == student.id);
+      const index = this.event.users.indexOf(u => u.id === student.id);
       this.event.users.splice(index, 1);
     });
   }

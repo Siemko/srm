@@ -1,12 +1,13 @@
-<div class="events-entries">
+<div class="events-entries" *ngIf="events">
       <mat-nav-list>
-          <mat-list-item *ngFor="let event of events">
-             <div matLine>
-               <b>{{ event.name }}</b>
-               <p>Maksymalna liczba osób: {{event.maxNumberOfPerson}} Opis: {{event.description}}</p>
+          <mat-list-item class="event-entry-item" *ngFor="let event of events">
+             <div class="event-entry-container" matLine>
+               <h3>{{ event.name }}</h3>
+               <i class="event-entry-description">{{event.description}}</i>
+               <p>Zapisanych: {{event.users !== null ? event.users.length : 0}} / {{event.maxNumberOfPerson}}</p>
              </div>
-             <button mat-raised-button [color]="'primary'" (click)="join(event.id)">Dołącz</button>
-             <button mat-raised-button [color]="'primary'" (click)="resign(event.id)">Zrezygnuj</button>
+             <button mat-raised-button [color]="'primary'" *ngIf="!event.isIn" (click)="join(event.id)">Dołącz</button>
+             <button mat-raised-button [color]="'primary'" *ngIf="event.isIn" (click)="resign(event.id)">Zrezygnuj</button>
           </mat-list-item>
         </mat-nav-list>
   </div>

@@ -53,4 +53,10 @@ export class EventsService {
   removeUser(eventId: number, userId: number) {
     return this.http.put(`api/event/${eventId}/remove-user/${userId}`, {}).map(res => res.json());
   }
+
+  isUserJoined(eventId: number, userId: number) {
+    return this.getEventDetails(eventId).toPromise().then(res => {
+      return res.users.map(u => u.id).indexOf(userId) > -1;
+    });
+  }
 }

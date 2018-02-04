@@ -21,14 +21,14 @@ export class EventsComponent implements OnInit {
 
   ngOnInit() {
     this.getEvents();
-    let role = localStorage.getItem(LocalStorageConst.ROLE_NAME).toLocaleLowerCase();
-    if(role != 'starosta')
+    const role = localStorage.getItem(LocalStorageConst.ROLE_NAME).toLocaleLowerCase();
+    if (role !== 'starosta') {
       this.router.navigate(['home/profile']);
+    }
   }
 
   getEvents() {
     this.eventsService.getEvents().subscribe((result: any[]) => {
-      console.log(result);
       this.events = result;
     });
   }
@@ -56,7 +56,6 @@ export class EventsComponent implements OnInit {
   }
 
   openDetails(event) {
-    
     const singleChatDialog = this.dialog.open(EventDetailsComponent, {
       data: { eventId: event.id }
     });

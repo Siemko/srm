@@ -5,7 +5,7 @@ import { FormControl } from '@angular/forms';
 import { FormArray } from '@angular/forms';
 import { Router } from '@angular/router';
 import { RegisterModel } from './models/register.model';
-
+import { PasswordValidation } from './register.match-password.validator';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -26,8 +26,11 @@ export class RegisterComponent implements OnInit {
       email: new FormControl('', [Validators.email, Validators.required]),
       confirmEmail: new FormControl('', [Validators.email, Validators.required]),
       password: new FormControl('', [Validators.required, Validators.minLength(8)]),
+      confirmPassword: new FormControl('', [Validators.required, Validators.minLength(8)]),
       name: new FormControl('', Validators.required),
       surname: new FormControl('', Validators.required)
+    }, {
+      validators: PasswordValidation.MatchPassword
     });
   }
 

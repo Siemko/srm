@@ -23,6 +23,12 @@
           <mat-error *ngIf="registerForm.controls.password.invalid">{{getErrorMessage(registerForm.controls.password)}}</mat-error>
         </mat-form-field>
         <mat-form-field>
+          <input matInput placeholder="Confirm password" name="confirmPassword" formControlName="confirmPassword" type="password">
+          <span matSuffix><i class="fa fa-fw fa-lock"></i></span>
+          <mat-error *ngIf="registerForm.controls.confirmPassword.invalid">{{getErrorMessage(registerForm.controls.confirmPassword)}}</mat-error>
+          <mat-error *ngIf="registerForm.controls.confirmPassword.errors?.MatchPassword">Hasła się nie zgadzają</mat-error>
+        </mat-form-field>
+        <mat-form-field>
           <input matInput placeholder="Name" name="name" formControlName="name" type="text">
           <span matSuffix><i class="fa fa-fw fa-user"></i></span>
           <mat-error *ngIf="registerForm.controls.name.invalid">{{getErrorMessage(registerForm.controls.name)}}</mat-error>

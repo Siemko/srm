@@ -85,14 +85,14 @@ namespace SRM
         {
             DbInitializer.Initialize(dataContext);
 
-            if (env.IsDevelopment())
+            //if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
 
             app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader().AllowCredentials());
 
-
+            app.UseStaticFiles();
             app.UseAuthentication();
             app.UseMvc();
         }

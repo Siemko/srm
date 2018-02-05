@@ -26,6 +26,8 @@ namespace SRM
                     logging.AddDebug();
                 })
                 .UseStartup<Startup>()
+                .UseSetting("detailedErrors", "true")
+                .CaptureStartupErrors(true)
                 .Build();
     }
 }
